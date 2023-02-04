@@ -5,13 +5,14 @@ import com.atlassian.jira.rest.client.api.domain.Issue
 import com.atlassian.jira.rest.client.api.domain.input.WorklogInput
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory
 import org.joda.time.DateTime
+import ru.jirabot.terminal.TerminalBot
 import java.net.URI
 
 const val HOST = ""
 const val FIND_ISSUE_JQL = "key = %s"
 
 fun main() {
-    Tests.testDi()
+    TerminalBot.run()
 }
 
 fun runTest() {
