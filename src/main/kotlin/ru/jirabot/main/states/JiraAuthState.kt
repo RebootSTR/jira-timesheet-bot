@@ -1,5 +1,6 @@
 package ru.jirabot.main.states
 
+import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.UserAction
 import ru.jirabot.domain.usecase.AuthUserUseCase
@@ -11,7 +12,8 @@ class JiraAuthState(
 
     // todo save login password if success ???
     override fun interactWithUser(): BotState? {
-        val success = AuthUserUseCase(username, password)
+        val authUseCase = DI.get<AuthUserUseCase>()
+        val success = authUseCase(username, password)
         return if (success) {
             JiraAuthSuccess()
         } else {
