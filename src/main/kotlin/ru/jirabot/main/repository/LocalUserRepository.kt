@@ -3,27 +3,27 @@ package ru.jirabot.main.repository
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.main.states.InitState
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 
-class LocalUserRepository : UserRepository<TelegramUser> {
+class LocalUserRepository : UserRepository<User> {
 
     // todo реализация сохранения в базу в другом репозитории (желательно с кэшированием но пока out of scope)
-    private val stateStorage = mutableMapOf<TelegramUser, BotState<TelegramUser>>()
-    private val authStorage = mutableMapOf<TelegramUser, CharArray>()
+    private val stateStorage = mutableMapOf<User, BotState<User>>()
+    private val authStorage = mutableMapOf<User, CharArray>()
 
-    override fun saveUserAuth(user: TelegramUser, auth: CharArray) {
+    override fun saveUserAuth(user: User, auth: CharArray) {
         authStorage[user] = auth
     }
 
-    override fun saveUserState(user: TelegramUser, state: BotState<TelegramUser>) {
+    override fun saveUserState(user: User, state: BotState<User>) {
         stateStorage[user] = state
     }
 
-    override fun getUserAuth(user: TelegramUser): CharArray {
+    override fun getUserAuth(user: User): CharArray {
         return authStorage[user]!!
     }
 
-    override fun getUserState(user: TelegramUser): BotState<TelegramUser> {
+    override fun getUserState(user: User): BotState<User> {
         return stateStorage[user] ?: kotlin.run {
             InitState().apply {
                 stateStorage[user] = this

@@ -6,7 +6,7 @@ import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 
 object Tests {
 
@@ -19,7 +19,7 @@ object Tests {
         DI.get<Dictionary>()
         DI.get<AuthUserUseCase<*>>()
         DI.get<CheckTaskURLUseCase>()
-        DI.get<UserRepository<TelegramUser>>()
+        DI.get<UserRepository<User>>()
         DI.get<SettingsRepository>()
     }
 }

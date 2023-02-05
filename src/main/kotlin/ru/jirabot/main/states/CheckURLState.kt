@@ -4,13 +4,13 @@ import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 
 class CheckURLState(
     private val url: String
-) : RedirectBotState<TelegramUser>() {
+) : RedirectBotState<User>() {
 
-    override fun interactWithUser(user: TelegramUser): BotState<TelegramUser>? {
+    override fun interactWithUser(user: User): BotState<User>? {
         val usecase = DI.get<CheckTaskURLUseCase>()
         return if (usecase(url)) {
             TaskNameInputState(url)

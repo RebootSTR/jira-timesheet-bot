@@ -1,5 +1,6 @@
 package ru.jirabot.domain.bot
 
+import kotlinx.serialization.Serializable
 import ru.jirabot.domain.dictionary.Dictionary
 
 /**
@@ -9,6 +10,7 @@ import ru.jirabot.domain.dictionary.Dictionary
  * Обязано обрабатывать действие пользователя и возвращать новое состояние
  *
  */
+@Serializable
 abstract class BotState<User> {
 
     // need to inject after creating state

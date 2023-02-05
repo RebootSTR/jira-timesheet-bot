@@ -2,11 +2,11 @@ package ru.jirabot.main.states
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 
-class UsernameInputState : BotState<TelegramUser>() {
+class UsernameInputState : BotState<User>() {
 
-    override fun interactWithUser(user: TelegramUser): BotState<TelegramUser>? {
+    override fun interactWithUser(user: User): BotState<User>? {
         client.sendMessage(
             user = user,
             text = dictionary["UsernameInputState"]
@@ -14,7 +14,7 @@ class UsernameInputState : BotState<TelegramUser>() {
         return null
     }
 
-    override fun obtainAction(action: UserAction): BotState<TelegramUser> =
+    override fun obtainAction(action: UserAction): BotState<User> =
         when (action) {
             is UserAction.ButtonClick -> TODO()
             is UserAction.Message -> {

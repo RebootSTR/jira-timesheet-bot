@@ -1,11 +1,11 @@
 package ru.jirabot.terminal
 
 import ru.jirabot.domain.bot.Client
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 
-class TerminalClient : Client<TelegramUser> {
+class TerminalClient : Client<User> {
 
-    override fun sendMessage(user: TelegramUser, text: String) {
+    override fun sendMessage(user: User, text: String) {
         println("----")
         println(text)
         println("----")

@@ -6,15 +6,15 @@ import ru.jirabot.domain.JiraAuthenticationHandler
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
-import ru.jirabot.telegram.TelegramUser
+import ru.jirabot.domain.entities.User
 import java.net.URI
 
-class AuthUserUseCaseImpl : AuthUserUseCase<TelegramUser> {
+class AuthUserUseCaseImpl : AuthUserUseCase<User> {
 
     private val settingsRepository: SettingsRepository = DI()
-    private val userRepository: UserRepository<TelegramUser> = DI()
+    private val userRepository: UserRepository<User> = DI()
 
-    override fun invoke(user: TelegramUser, login: String, password: CharArray): Boolean {
+    override fun invoke(user: User, login: String, password: CharArray): Boolean {
         val authHandler = JiraAuthenticationHandler.create(login, password)
         val uri = URI.create(settingsRepository.getJiraHost())
 

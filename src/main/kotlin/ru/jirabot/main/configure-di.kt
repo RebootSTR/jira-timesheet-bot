@@ -11,7 +11,6 @@ import ru.jirabot.main.fakeUsecase.FakeCheckTaskURLUseCase
 import ru.jirabot.main.repository.LocalSettingsRepository
 import ru.jirabot.main.repository.LocalUserRepository
 import ru.jirabot.main.usecase.AuthUserUseCaseImpl
-import ru.jirabot.telegram.TelegramUser
 
 fun configureDi() {
     DI.single<Dictionary> {
