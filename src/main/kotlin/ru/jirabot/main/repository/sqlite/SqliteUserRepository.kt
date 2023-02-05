@@ -15,22 +15,34 @@ import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.main.repository.sqlite.tables.UserDao
 import ru.jirabot.main.repository.sqlite.tables.UserTable
-import ru.jirabot.main.states.InitState
-import ru.jirabot.main.states.JiraAuthSuccess
+import ru.jirabot.main.states.*
 import java.lang.IllegalArgumentException
+import kotlin.reflect.KClass
 
 class SqliteUserRepository : UserRepository<User> {
 
     private val module = SerializersModule {
-        // todo: all states serialization
-        polymorphic(BotState::class) {
-            subclass(InitState::class)
-        }
-
-        polymorphic(BotState::class) {
-            subclass(JiraAuthSuccess::class)
+        for (state in getAllStates()) {
+            polymorphic(BotState::class) {
+                subclass(state)
+            }
         }
     }
+
+    private fun getAllStates() = arrayOf(
+        CheckURLState::class,
+        FirstTemplateState::class,
+        HelloState::class,
+        InitState::class,
+        JiraAuthSuccess::class,
+        JiraAuthState::class,
+        PasswordInputState::class,
+        TaskHoursInputState::class,
+        TaskNameInputState::class,
+        TaskURLInputState::class,
+        UsernameInputState::class,
+        WrongURLState::class
+    )
 
     private val format = Json {
         serializersModule = module
