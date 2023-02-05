@@ -5,6 +5,8 @@ object DI {
     val factories = mutableMapOf<Class<*>, () -> Any>()
     val storage = mutableMapOf<Class<*>, Any>()
 
+    inline operator fun <reified T> invoke(): T = get()
+
     inline fun <reified T> get(): T {
         var value = storage[T::class.java]
         if (value == null) {

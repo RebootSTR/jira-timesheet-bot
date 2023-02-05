@@ -9,13 +9,14 @@ import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.StateHandler
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.main.Credentials
-import ru.jirabot.main.states.InitState
+import ru.jirabot.domain.repository.SettingsRepository
+import ru.jirabot.domain.repository.UserRepository
 
 class TelegramBot {
 
-    // todo реализация сохранения в базу (желательно с кэшированием но пока out of scope)
-    private val stateStorage = mutableMapOf<TelegramUser, BotState<TelegramUser>>()
+    private val userRepository: UserRepository<TelegramUser> = DI()
+    private val settingsRepository: SettingsRepository = DI()
+
     private val bot = initBot()
     private val telegramClient = TelegramClient(bot)
 
@@ -25,7 +26,8 @@ class TelegramBot {
 
     private fun initBot(): Bot = bot {
         logLevel = LogLevel.All()
-        token = Credentials.TOKEN
+        token = settingsRepository.getTelegramToken()
+        proxy
         dispatch {
             // todo обработка кнопок
             text {
@@ -37,13 +39,9 @@ class TelegramBot {
     }
 
     private fun handleText(user: TelegramUser, text: String) {
-        val state = stateStorage[user] ?: kotlin.run {
-            InitState().apply {
-                stateStorage[user] = this
-            }
-        }
+        val state = userRepository.getUserState(user)
         val newState = handleState(user, state, text)
-        stateStorage[user] = newState
+        userRepository.saveUserState(user, newState)
     }
 
     private fun handleState(user: TelegramUser, state: BotState<TelegramUser>, message: String) =

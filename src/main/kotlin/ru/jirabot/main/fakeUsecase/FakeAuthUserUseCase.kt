@@ -1,9 +1,11 @@
 package ru.jirabot.main.fakeUsecase
 
 import ru.jirabot.domain.usecase.AuthUserUseCase
+import ru.jirabot.telegram.TelegramUser
 
-class FakeAuthUserUseCase: AuthUserUseCase {
-    override fun invoke(login: String, password: String): Boolean {
-        return login == "login" && password == "password"
+class FakeAuthUserUseCase: AuthUserUseCase<TelegramUser> {
+
+    override fun invoke(user: TelegramUser, login: String, password: CharArray): Boolean {
+        return login == "login" && password.contentEquals("password".toCharArray())
     }
 }

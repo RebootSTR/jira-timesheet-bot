@@ -21,7 +21,7 @@ class PasswordInputState(
         when (action) {
             is UserAction.ButtonClick -> TODO()
             is UserAction.Message -> {
-                JiraAuthState(username, action.text)
+                JiraAuthState(username, action.text.toCharArray())
             }
         }
 }

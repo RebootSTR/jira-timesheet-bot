@@ -8,13 +8,13 @@ import ru.jirabot.telegram.TelegramUser
 
 class JiraAuthState(
     private val username: String,
-    private val password: String
+    private val password: CharArray
 ) : RedirectBotState<TelegramUser>() {
 
+    private val authUseCase: AuthUserUseCase<TelegramUser> = DI.get()
     // todo save login password if success ???
     override fun interactWithUser(user: TelegramUser): BotState<TelegramUser>? {
-        val authUseCase = DI.get<AuthUserUseCase>()
-        val success = authUseCase(username, password)
+        val success = authUseCase(user, username, password)
         return if (success) {
             JiraAuthSuccess()
         } else {

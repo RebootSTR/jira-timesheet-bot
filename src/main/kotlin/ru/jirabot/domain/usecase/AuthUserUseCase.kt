@@ -3,7 +3,7 @@ package ru.jirabot.domain.usecase
 /**
  * Авторизация и проверка правильности логин:пароль
  */
-interface AuthUserUseCase {
+interface AuthUserUseCase<User> {
 
-    operator fun invoke(login: String, password: String): Boolean
+    operator fun invoke(user: User, login: String, password: CharArray): Boolean
 }

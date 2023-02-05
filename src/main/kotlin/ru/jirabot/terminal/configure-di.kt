@@ -14,7 +14,7 @@ fun configureTerminal() {
         DictionaryImpl()
     }
 
-    DI.single<AuthUserUseCase> {
+    DI.single<AuthUserUseCase<*>> {
         FakeAuthUserUseCase()
     }
 

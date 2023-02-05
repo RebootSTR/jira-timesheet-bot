@@ -5,17 +5,27 @@ import com.atlassian.jira.rest.client.api.domain.Issue
 import com.atlassian.jira.rest.client.api.domain.input.WorklogInput
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory
 import org.joda.time.DateTime
+import ru.jirabot.di.DI
+import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.telegram.TelegramBot
 import ru.jirabot.terminal.TerminalBot
+import ru.jirabot.terminal.configureTerminal
 import java.net.URI
 
-const val HOST = ""
 const val FIND_ISSUE_JQL = "key = %s"
-
 fun main() {
-//    TerminalBot.run()
-    configureFakeDi()
+    runTelegram()
+//    Tests.testDi()
+}
+
+fun runTelegram() {
+    configureDi()
     TelegramBot().run()
+}
+
+fun runTerminal() {
+    configureTerminal()
+    TerminalBot.run()
 }
 
 fun runTest() {
@@ -63,8 +73,5 @@ fun JiraRestClient.setTimeSheet(issue: Issue, comment: String, startTime: DateTi
 }
 
 fun auth(): JiraRestClient? {
-    val uri = URI.create(HOST)
-
-    return AsynchronousJiraRestClientFactory()
-        .createWithBasicHttpAuthentication(uri, Credentials.USERNAME, Credentials.PASSWORD)
+    error("Код только для ознакомления, потихоньку перезжает в нормальные слои")
 }
