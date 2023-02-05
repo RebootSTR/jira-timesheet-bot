@@ -1,17 +1,15 @@
 package ru.jirabot.main.states
 
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.UserAction
+import ru.jirabot.domain.bot.RedirectBotState
+import ru.jirabot.telegram.TelegramUser
 
-class JiraAuthSuccess: BotState() {
-    override fun interactWithUser(): BotState? {
+class JiraAuthSuccess : RedirectBotState<TelegramUser>() {
+    override fun interactWithUser(user: TelegramUser): BotState<TelegramUser>? {
         client.sendMessage(
+            user = user,
             text = dictionary["JiraAuthSuccess"]
         )
         return FirstTemplateState()
-    }
-
-    override fun obtainAction(action: UserAction): BotState {
-        TODO("Not yet implemented")
     }
 }

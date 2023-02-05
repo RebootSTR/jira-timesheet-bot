@@ -1,7 +1,5 @@
 package ru.jirabot.domain.bot
 
-import ru.jirabot.domain.Client
-import ru.jirabot.domain.UserAction
 import ru.jirabot.domain.dictionary.Dictionary
 
 /**
@@ -11,11 +9,11 @@ import ru.jirabot.domain.dictionary.Dictionary
  * Обязано обрабатывать действие пользователя и возвращать новое состояние
  *
  */
-abstract class BotState {
+abstract class BotState<User> {
 
     // need to inject after creating state
     lateinit var dictionary: Dictionary
-    lateinit var client: Client
+    lateinit var client: Client<User>
 
     /**
      * Определяет реакцию бота на устрановку состояния
@@ -23,10 +21,10 @@ abstract class BotState {
      * @return [BotState] если необходимо выполнить редирект
      * @return null если состояние принято успешно
      */
-    abstract fun interactWithUser(): BotState?
+    abstract fun interactWithUser(user: User): BotState<User>?
 
     /**
      * Обработка действия пользователя и возврат нового состояния
      */
-    abstract fun obtainAction(action: UserAction): BotState
+    abstract fun obtainAction(action: UserAction): BotState<User>
 }

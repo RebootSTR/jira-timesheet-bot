@@ -11,7 +11,7 @@ object Tests {
      * Если не упало, значит работает))))
      */
     fun testDi() {
-        configureDi()
+        configureFakeDi()
 
         DI.get<Dictionary>()
         DI.get<AuthUserUseCase>()

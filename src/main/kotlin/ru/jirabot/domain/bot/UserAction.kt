@@ -1,4 +1,4 @@
-package ru.jirabot.domain
+package ru.jirabot.domain.bot
 
 sealed class UserAction {
     class Message(val text: String): UserAction()

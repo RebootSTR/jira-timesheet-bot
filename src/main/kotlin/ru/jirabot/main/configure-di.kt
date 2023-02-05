@@ -8,7 +8,7 @@ import ru.jirabot.main.dictionary.DictionaryImpl
 import ru.jirabot.main.fakeUsecase.FakeAuthUserUseCase
 import ru.jirabot.main.fakeUsecase.FakeCheckTaskURLUseCase
 
-fun configureDi() {
+fun configureFakeDi() {
     DI.single<Dictionary> {
         DictionaryImpl()
     }
