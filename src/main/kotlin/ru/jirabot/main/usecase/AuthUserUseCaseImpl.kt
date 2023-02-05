@@ -7,6 +7,7 @@ import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.repository.Settings
 import java.net.URI
 
 class AuthUserUseCaseImpl : AuthUserUseCase<User> {
@@ -16,7 +17,7 @@ class AuthUserUseCaseImpl : AuthUserUseCase<User> {
 
     override fun invoke(user: User, login: String, password: CharArray): Boolean {
         val authHandler = JiraAuthenticationHandler.create(login, password)
-        val uri = URI.create(settingsRepository.getJiraHost())
+        val uri = URI.create(settingsRepository.getSettingsValue(Settings.JIRA_HOST))
 
         val client = AsynchronousJiraRestClientFactory()
             .createWithAuthenticationHandler(uri, authHandler)

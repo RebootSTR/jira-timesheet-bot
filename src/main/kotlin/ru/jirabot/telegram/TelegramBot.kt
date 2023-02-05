@@ -10,6 +10,7 @@ import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.StateHandler
 import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 
@@ -27,7 +28,7 @@ class TelegramBot {
 
     private fun initBot(): Bot = bot {
         logLevel = LogLevel.All()
-        token = settingsRepository.getTelegramToken()
+        token = settingsRepository.getSettingsValue(Settings.TG_TOKEN)
         proxy
         dispatch {
             // todo обработка кнопок
