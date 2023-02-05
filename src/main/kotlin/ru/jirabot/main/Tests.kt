@@ -9,6 +9,8 @@ import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 import ru.jirabot.domain.entities.User
 import ru.jirabot.main.repository.sqlite.SqliteDataSource
 import ru.jirabot.main.repository.sqlite.SqliteUserRepository
+import ru.jirabot.main.states.JiraAuthSuccess
+import ru.jirabot.terminal.configureTerminal
 
 object Tests {
 
@@ -29,9 +31,19 @@ object Tests {
      * В процессе проверки работы бд)))))
      */
     fun testSqliteDb() {
+        configureTerminal()
         val source = SqliteDataSource()
         val repo = SqliteUserRepository()
 
-        val newUser = User(12L)
+        val user = User(12L)
+
+        val initState = repo.getUserState(user)
+        println(initState) // should be 'InitState'
+
+        repo.saveUserAuth(user, "auth".toCharArray())
+        println(repo.getUserAuth(user))
+
+        repo.saveUserState(user, JiraAuthSuccess())
+        println(repo.getUserState(user))
     }
 }

@@ -8,8 +8,8 @@ import org.jetbrains.exposed.sql.Column
 
 object UserTable : LongIdTable() {
     val botId: Column<Long> = long("bot_id")
-    val auth: Column<String> = varchar("auth", 32)
-    val lastState: Column<String> = varchar("last_state", 200)
+    val auth: Column<String?> = varchar("auth", 32).nullable()
+    val lastState: Column<String?> = text("last_state").nullable()
 }
 
 class UserDao(id: EntityID<Long>) : LongEntity(id) {

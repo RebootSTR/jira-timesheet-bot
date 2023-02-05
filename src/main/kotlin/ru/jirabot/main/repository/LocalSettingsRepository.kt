@@ -11,21 +11,22 @@ class LocalSettingsRepository : SettingsRepository {
         load(FileInputStream(PROPERTIES_FILE_PATH))
     }
 
-    private fun getSettingValue(type: Settings): String {
-        return when (type) {
+    override fun getSettingsValue(settings: Settings): String {
+        return when (settings) {
             is Settings.TG_TOKEN -> properties.getProperty(BOT_TOKEN_PROPS_KEY)
             is Settings.JIRA_HOST -> properties.getProperty(JIRA_HOST_PROPS_KEY)
+            is Settings.DB_USER -> properties.getProperty(DB_USER_PROPS_KEY)
+            is Settings.DB_PASSWORD -> properties.getProperty(DB_PASSWORD_PROPS_KEY)
         }
     }
-
-    override fun getJiraHost() = getSettingValue(Settings.JIRA_HOST)
-    override fun getTelegramToken() = getSettingValue(Settings.TG_TOKEN)
 
     companion object {
         private const val PROPERTIES_FILE_PATH = "local.properties"
 
         private const val BOT_TOKEN_PROPS_KEY = "bot.token"
         private const val JIRA_HOST_PROPS_KEY = "jira.host"
+        private const val DB_USER_PROPS_KEY = "sqlite.user"
+        private const val DB_PASSWORD_PROPS_KEY = "sqlite.password"
     }
 }
 

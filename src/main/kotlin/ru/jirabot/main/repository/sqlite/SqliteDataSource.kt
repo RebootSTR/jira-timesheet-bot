@@ -3,6 +3,7 @@ package ru.jirabot.main.repository.sqlite
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.name
+import org.jetbrains.exposed.sql.transactions.transaction
 import ru.jirabot.di.DI
 import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
@@ -23,13 +24,16 @@ class SqliteDataSource {
 
     init {
         println("Opened database: $${db.name}")
-        SchemaUtils.create(
-            UserTable
-        )
+        transaction {
+            SchemaUtils.drop(UserTable)
+            SchemaUtils.create(
+                UserTable
+            )
+        }
     }
 
     companion object {
-        private const val DB_URL = "jdbc:sqlite:/data/data.db"
+        private const val DB_URL = "jdbc:sqlite:src/data/data.db"
         private const val DB_DRIVER_NAME = "org.sqlite.JDBC"
     }
 }
