@@ -14,9 +14,9 @@ import java.net.URI
 
 const val FIND_ISSUE_JQL = "key = %s"
 fun main() {
-    // runTelegram()
-    // Tests.testDi()
-    Tests.testSqliteDb()
+    runTelegram()
+//    runTerminal()
+//    Tests.testDi()
 }
 
 fun runTelegram() {

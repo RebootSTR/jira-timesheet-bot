@@ -16,12 +16,22 @@ object TerminalBot {
         while (true) {
             print("> ")
             val message = readln()
-            state = obtainState(state, message)
+            state = if (message.startsWith("/")) {
+                handleButton(state, message.substringAfter("/"))
+            } else {
+                handleMessage(state, message)
+            }
         }
     }
 
-    private fun obtainState(state: BotState<User>, message: String) =
+    private fun handleMessage(state: BotState<User>, message: String) =
         StateHandler.handleState(state, User(0), UserAction.Message(message)) {
+            dictionary = DI.get()
+            client = DI.get()
+        }
+
+    private fun handleButton(state: BotState<User>, payload: String) =
+        StateHandler.handleState(state, User(0), UserAction.ButtonClick(payload, 0L)) {
             dictionary = DI.get()
             client = DI.get()
         }

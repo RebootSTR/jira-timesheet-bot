@@ -3,6 +3,7 @@ package ru.jirabot.telegram
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.bot
 import com.github.kotlintelegrambot.dispatch
+import com.github.kotlintelegrambot.dispatcher.callbackQuery
 import com.github.kotlintelegrambot.dispatcher.text
 import com.github.kotlintelegrambot.logging.LogLevel
 import ru.jirabot.di.DI
@@ -37,18 +38,28 @@ class TelegramBot {
                 val userId = message.from?.id ?: return@text
                 handleText(User(userId), text)
             }
+            this.callbackQuery {
+                val userId = callbackQuery.from.id
+                val messageId = callbackQuery.message?.messageId
+                handleButton(User(userId), callbackQuery.data, messageId)
+            }
         }
     }
 
     private fun handleText(user: User, text: String) {
         val state = userRepository.getUserState(user)
-        val newState = handleState(user, state, text)
+        val newState = StateHandler.handleState(state, user, UserAction.Message(text), ::injector)
         userRepository.saveUserState(user, newState)
     }
 
-    private fun handleState(user: User, state: BotState<User>, message: String) =
-        StateHandler.handleState(state, user, UserAction.Message(message)) {
-            dictionary = DI.get()
-            client = telegramClient
-        }
+    private fun handleButton(user: User, payload: String, messageId: Long?) {
+        val state = userRepository.getUserState(user)
+        val newState = StateHandler.handleState(state, user, UserAction.ButtonClick(payload, messageId), ::injector)
+        userRepository.saveUserState(user, newState)
+    }
+
+    private fun injector(state: BotState<User>) {
+        state.dictionary = DI.get()
+        state.client = telegramClient
+    }
 }
