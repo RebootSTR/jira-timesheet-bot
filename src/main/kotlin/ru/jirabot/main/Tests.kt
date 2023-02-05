@@ -7,6 +7,8 @@ import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 import ru.jirabot.domain.entities.User
+import ru.jirabot.main.repository.sqlite.SqliteDataSource
+import ru.jirabot.main.repository.sqlite.SqliteUserRepository
 
 object Tests {
 
@@ -21,5 +23,15 @@ object Tests {
         DI.get<CheckTaskURLUseCase>()
         DI.get<UserRepository<User>>()
         DI.get<SettingsRepository>()
+    }
+
+    /**
+     * В процессе проверки работы бд)))))
+     */
+    fun testSqliteDb() {
+        val source = SqliteDataSource()
+        val repo = SqliteUserRepository()
+
+        val newUser = User(12L)
     }
 }
