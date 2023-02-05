@@ -1,9 +1,11 @@
 package ru.jirabot.main.states
 
+import kotlinx.serialization.Serializable
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.entities.User
 
+@Serializable
 class TaskURLInputState(
     private val silent: Boolean = false
 ) : BotState<User>() {
