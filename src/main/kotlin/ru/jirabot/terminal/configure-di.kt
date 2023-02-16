@@ -12,7 +12,8 @@ import ru.jirabot.main.fakeUsecase.FakeAuthUserUseCase
 import ru.jirabot.main.fakeUsecase.FakeCheckTaskURLUseCase
 import ru.jirabot.main.repository.LocalSettingsRepository
 import ru.jirabot.main.repository.LocalUserRepository
-import ru.jirabot.main.repository.sqlite.SqliteDataSource
+import ru.jirabot.main.database.datasource.AutoDropDataSource
+import ru.jirabot.main.database.datasource.MyDataSource
 
 fun configureTerminal() {
     DI.single<Dictionary> {
@@ -35,8 +36,8 @@ fun configureTerminal() {
         LocalSettingsRepository()
     }
 
-    DI.single<SqliteDataSource> {
-        SqliteDataSource()
+    DI.single<MyDataSource> {
+        AutoDropDataSource
     }
 
     DI.single<UserRepository<*>> {

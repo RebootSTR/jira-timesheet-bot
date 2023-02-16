@@ -10,7 +10,9 @@ import ru.jirabot.main.configurators.configGson
 import ru.jirabot.main.dictionary.DictionaryImpl
 import ru.jirabot.main.fakeUsecase.FakeCheckTaskURLUseCase
 import ru.jirabot.main.repository.LocalSettingsRepository
-import ru.jirabot.main.repository.LocalUserRepository
+import ru.jirabot.main.database.SqliteUserRepository
+import ru.jirabot.main.database.datasource.MyDataSource
+import ru.jirabot.main.database.datasource.SqliteDataSource
 import ru.jirabot.main.usecase.AuthUserUseCaseImpl
 
 fun configureDi() {
@@ -19,7 +21,7 @@ fun configureDi() {
     }
 
     DI.single<UserRepository<*>> {
-        LocalUserRepository()
+        SqliteUserRepository()
     }
 
     DI.single<SettingsRepository> {
@@ -36,5 +38,9 @@ fun configureDi() {
 
     DI.single {
         configGson()
+    }
+
+    DI.single<MyDataSource> {
+        SqliteDataSource
     }
 }

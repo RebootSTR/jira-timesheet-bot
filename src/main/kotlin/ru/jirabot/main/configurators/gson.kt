@@ -2,7 +2,9 @@ package ru.jirabot.main.configurators
 
 import com.google.gson.*
 import ru.jirabot.domain.bot.BotState
+import ru.jirabot.domain.serialization.Exclude
 import java.lang.reflect.Type
+
 
 fun configGson(): Gson {
     val builder = GsonBuilder()
@@ -10,8 +12,19 @@ fun configGson(): Gson {
             BotState::class.java,
             JsonDeserializerWithInheritance<BotState<*>>()
         )
+        .setExclusionStrategies(exclusionStrategy())
 
-    return builder.create()
+        return builder.create()
+}
+
+private fun exclusionStrategy() = object : ExclusionStrategy {
+    override fun shouldSkipClass(clazz: Class<*>?): Boolean {
+        return false
+    }
+
+    override fun shouldSkipField(field: FieldAttributes): Boolean {
+        return field.getAnnotation(Exclude::class.java) != null
+    }
 }
 
 /**

@@ -1,4 +1,4 @@
-package ru.jirabot.main.repository.sqlite
+package ru.jirabot.main.database
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
@@ -7,8 +7,8 @@ import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.main.Serializer.deserializeBotState
 import ru.jirabot.main.Serializer.serialize
-import ru.jirabot.main.repository.sqlite.tables.UserDao
-import ru.jirabot.main.repository.sqlite.tables.UserTable
+import ru.jirabot.main.database.tables.UserDao
+import ru.jirabot.main.database.tables.UserTable
 import ru.jirabot.main.states.InitState
 
 class SqliteUserRepository : UserRepository<User> {

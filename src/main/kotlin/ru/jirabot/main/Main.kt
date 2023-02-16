@@ -3,24 +3,26 @@ package ru.jirabot.main
 import com.atlassian.jira.rest.client.api.JiraRestClient
 import com.atlassian.jira.rest.client.api.domain.Issue
 import com.atlassian.jira.rest.client.api.domain.input.WorklogInput
-import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory
 import org.joda.time.DateTime
 import ru.jirabot.di.DI
-import ru.jirabot.domain.repository.SettingsRepository
+import ru.jirabot.main.database.datasource.MyDataSource
 import ru.jirabot.telegram.TelegramBot
 import ru.jirabot.terminal.TerminalBot
 import ru.jirabot.terminal.configureTerminal
-import java.net.URI
 
 const val FIND_ISSUE_JQL = "key = %s"
 fun main() {
-    // runTelegram()
+     runTelegram()
     // Tests.testDi()
-    Tests.testSqliteDb()
+//    Tests.testSqliteDb()
 }
 
 fun runTelegram() {
     configureDi()
+
+    // открытие БД
+    DI<MyDataSource>().create()
+    // запуск бота
     TelegramBot().run()
 }
 

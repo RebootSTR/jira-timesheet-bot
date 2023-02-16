@@ -7,11 +7,11 @@ import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 import ru.jirabot.domain.entities.User
-import ru.jirabot.main.repository.sqlite.SqliteDataSource
-import ru.jirabot.main.repository.sqlite.SqliteUserRepository
+import ru.jirabot.main.database.datasource.AutoDropDataSource
+import ru.jirabot.main.database.SqliteUserRepository
+import ru.jirabot.main.database.datasource.MyDataSource
 import ru.jirabot.main.states.InitState
 import ru.jirabot.main.states.JiraAuthSuccess
-import ru.jirabot.terminal.configureTerminal
 import java.util.UUID
 
 object Tests {
@@ -34,7 +34,7 @@ object Tests {
      */
     fun testSqliteDb() {
         configureDi()
-        val source = SqliteDataSource()
+        val source = DI<MyDataSource>().create()
         val repo = SqliteUserRepository()
 
         val user = User(12L)

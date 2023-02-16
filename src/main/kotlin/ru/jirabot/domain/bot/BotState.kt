@@ -1,7 +1,9 @@
 package ru.jirabot.domain.bot
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.jirabot.domain.dictionary.Dictionary
+import ru.jirabot.domain.serialization.Exclude
 
 /**
  * Состояние бота для конкретного юзера
@@ -16,7 +18,9 @@ abstract class BotState<User> {
     val typeName: String = javaClass.name
 
     // need to inject after creating state
+    @Exclude
     lateinit var dictionary: Dictionary
+    @Exclude
     lateinit var client: Client<User>
 
     /**
