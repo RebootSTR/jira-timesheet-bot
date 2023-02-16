@@ -9,7 +9,9 @@ enum class Payloads(val text: String) {
     SETTINGS("-Настройки"),
     INFO("-Информация о боте"),
     ADD("➕ Добавить"),
-    BACK("-\uD83D\uDD19 Назад");
+    BACK("\uD83D\uDD19 Назад"),
+    CANCEL("Отмена"),
+    ;
 
     operator fun invoke() = Button(this.text, this.name)
 

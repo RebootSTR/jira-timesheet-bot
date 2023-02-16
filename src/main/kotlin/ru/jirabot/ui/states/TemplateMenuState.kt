@@ -39,13 +39,13 @@ class TemplateMenuState(
             is UserAction.ButtonClick -> {
                 when (action.payload.toPayload()) {
                     Payloads.ADD -> TaskNameInputState(TemplateDraft())
-                    Payloads.BACK -> TODO()
+                    Payloads.BACK -> MenuState(action.messageId)
                     else -> TODO()
                 }
             }
 
             is UserAction.Message -> {
-                TODO()
+                MenuState()
             }
         }
 

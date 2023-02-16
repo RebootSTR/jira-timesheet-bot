@@ -6,14 +6,17 @@ import ru.jirabot.domain.entities.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 
-class MenuState : BotState() {
+class MenuState(
+    private val messageId: Long? = null
+) : BotState() {
 
     override fun interactWithUser(user: User): BotState? {
         // todo add info to menu
         client.sendMessage(
             user = user,
             text = dictionary["MenuState"],
-            buttons = keyboard()
+            buttons = keyboard(),
+            replaceMessageId = messageId
         )
 
         return null
