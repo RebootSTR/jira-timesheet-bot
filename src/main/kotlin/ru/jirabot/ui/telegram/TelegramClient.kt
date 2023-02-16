@@ -12,12 +12,21 @@ class TelegramClient(
     private val bot: Bot
 ) : Client {
 
-    override fun sendMessage(user: User, text: String, buttons: List<List<Button>>?) {
-        bot.sendMessage(
-            chatId = ChatId.fromId(user.userId),
-            text = text,
-            replyMarkup = buttons?.keyboard()
-        )
+    override fun sendMessage(user: User, text: String, replaceMessageId: Long?, buttons: List<List<Button>>?) {
+        if (replaceMessageId == null) {
+            bot.sendMessage(
+                chatId = ChatId.fromId(user.userId),
+                text = text,
+                replyMarkup = buttons?.keyboard()
+            )
+        } else {
+            bot.editMessageText(
+                chatId = ChatId.fromId(user.userId),
+                messageId = replaceMessageId,
+                text = text,
+                replyMarkup = buttons?.keyboard()
+            )
+        }
     }
 
     private fun List<List<Button>>.keyboard() = InlineKeyboardMarkup.create(
@@ -27,13 +36,4 @@ class TelegramClient(
             }
         }
     )
-
-    override fun replaceMessage(user: User, messageId: Long, text: String, buttons: List<List<Button>>?) {
-        bot.editMessageText(
-            chatId = ChatId.fromId(user.userId),
-            messageId = messageId,
-            text = text,
-            replyMarkup = buttons?.keyboard()
-        )
-    }
 }

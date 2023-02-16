@@ -7,13 +7,7 @@ interface Client {
     fun sendMessage(
         user: User,
         text: String,
-        buttons: List<List<Button>>? = null
-    )
-
-    fun replaceMessage(
-        user: User,
-        messageId: Long,
-        text: String,
+        replaceMessageId: Long? = null,
         buttons: List<List<Button>>? = null
     )
 }

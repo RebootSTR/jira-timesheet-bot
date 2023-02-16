@@ -1,19 +1,22 @@
 package ru.jirabot.ui
 
 import ru.jirabot.data.configurators.configGson
-import ru.jirabot.data.database.SqliteUserRepository
 import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.data.database.datasource.SqliteDataSource
 import ru.jirabot.data.dictionary.DictionaryImpl
-import ru.jirabot.data.fakeUsecase.FakeCheckTaskURLUseCase
 import ru.jirabot.data.repository.LocalSettingsRepository
+import ru.jirabot.data.repository.sqlite.SqliteTemplateRepository
+import ru.jirabot.data.repository.sqlite.SqliteUserRepository
 import ru.jirabot.data.usecase.AuthUserUseCaseImpl
+import ru.jirabot.data.usecase.CheckTaskURLUseCaseImpl
+import ru.jirabot.data.usecase.ParseHoursInputUseCaseImpl
+import ru.jirabot.data.usecase.ParseStartTimeInputUseCaseImpl
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
 import ru.jirabot.domain.repository.SettingsRepository
+import ru.jirabot.domain.repository.TemplateRepository
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.domain.usecase.AuthUserUseCase
-import ru.jirabot.domain.usecase.CheckTaskURLUseCase
+import ru.jirabot.domain.usecase.*
 
 fun configureDi() {
     DI.single<Dictionary> {
@@ -22,6 +25,10 @@ fun configureDi() {
 
     DI.single<UserRepository> {
         SqliteUserRepository()
+    }
+
+    DI.single<TemplateRepository> {
+        SqliteTemplateRepository()
     }
 
     DI.single<SettingsRepository> {
@@ -33,7 +40,7 @@ fun configureDi() {
     }
 
     DI.single<CheckTaskURLUseCase> {
-        FakeCheckTaskURLUseCase()
+        CheckTaskURLUseCaseImpl()
     }
 
     DI.single {
@@ -42,5 +49,17 @@ fun configureDi() {
 
     DI.single<MyDataSource> {
         SqliteDataSource
+    }
+
+    DI.single<ParseHoursInputUseCase> {
+        ParseHoursInputUseCaseImpl()
+    }
+
+    DI.single<ParseStartTimeInputUseCase> {
+        ParseStartTimeInputUseCaseImpl()
+    }
+
+    DI.single<SaveTemplateUseCase> {
+        SaveTemplateUseCaseImpl()
     }
 }

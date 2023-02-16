@@ -1,16 +1,10 @@
 package ru.jirabot.domain.entities
 
-import org.joda.time.DateTime
-
 data class Template(
     val id: Long,
-    val owner: User,
-    val info: TemplateInfo,
-)
-
-data class TemplateInfo(
+    val user: User,
     val url: String,
-    val taskName: String,
-    val startDate: DateTime,
+    val title: String,
+    val startTimeInMinutes: Int,
     val hours: Int,
 )

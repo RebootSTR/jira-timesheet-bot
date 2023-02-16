@@ -1,10 +1,11 @@
 package ru.jirabot.domain.repository
 
 import ru.jirabot.domain.entities.Template
+import ru.jirabot.domain.entities.User
 
-interface TemplateRepository<User> {
+interface TemplateRepository {
 
-    fun saveTemplate(user: User, template: Template)
+    fun saveTemplate(template: Template)
 
-    fun getTemplates(user: User)
+    fun getTemplates(user: User): List<Template>
 }

@@ -1,10 +1,12 @@
-package ru.jirabot.ui.common.states
+package ru.jirabot.ui.states
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.entities.User
+import ru.jirabot.ui.drafts.TemplateDraft
 
-class TaskURLInputState(
+class TaskHoursInputState(
+    private val template: TemplateDraft,
     private val silent: Boolean = false
 ) : BotState() {
 
@@ -12,18 +14,18 @@ class TaskURLInputState(
         if (!silent) {
             client.sendMessage(
                 user = user,
-                text = dictionary["TaskURLInputState"]
+                text = dictionary["TaskHoursInputState"]
             )
         }
         return null
     }
 
-    override fun obtainAction(action: UserAction): BotState {
+    override fun obtainAction(action: UserAction): BotState =
         when (action) {
             is UserAction.ButtonClick -> TODO()
-            is UserAction.Message -> {
-                return CheckURLState(action.text)
-            }
+            is UserAction.Message -> HoursValidateState(
+                template = template.apply { hoursString = action.text }
+            )
         }
-    }
+
 }

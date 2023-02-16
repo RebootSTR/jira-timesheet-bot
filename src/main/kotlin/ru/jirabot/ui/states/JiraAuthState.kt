@@ -1,4 +1,4 @@
-package ru.jirabot.ui.common.states
+package ru.jirabot.ui.states
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState

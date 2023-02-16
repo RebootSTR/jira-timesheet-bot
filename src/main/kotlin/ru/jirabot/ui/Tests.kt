@@ -1,6 +1,6 @@
 package ru.jirabot.ui
 
-import ru.jirabot.data.database.SqliteUserRepository
+import ru.jirabot.data.repository.sqlite.SqliteUserRepository
 import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
@@ -9,8 +9,8 @@ import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
-import ru.jirabot.ui.common.states.InitState
-import ru.jirabot.ui.common.states.JiraAuthSuccess
+import ru.jirabot.ui.states.InitState
+import ru.jirabot.ui.states.JiraAuthSuccess
 import java.util.*
 
 object Tests {

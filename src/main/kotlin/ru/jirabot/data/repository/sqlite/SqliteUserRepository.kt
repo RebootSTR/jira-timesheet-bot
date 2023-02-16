@@ -1,4 +1,4 @@
-package ru.jirabot.data.database
+package ru.jirabot.data.repository.sqlite
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
@@ -9,7 +9,7 @@ import ru.jirabot.data.utils.Serializer.serialize
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.ui.common.states.InitState
+import ru.jirabot.ui.states.InitState
 
 class SqliteUserRepository : UserRepository {
 
@@ -54,9 +54,21 @@ class SqliteUserRepository : UserRepository {
             saveNewUser(user)
             InitState()
         } else {
-            iterable.first().lastState!!.deserializeBotState()
+            // на случай если после перезапуска бота, стейта уже не будет либо он станет не валидным
+            try {
+                iterable.first().lastState!!.deserializeBotState()
+            } catch (ex: Exception) {
+                InitState()
+            }
         }
     }
+
+    override fun isUserExist(user: User): Boolean =
+        transaction {
+            UserDao.find {
+                UserTable.botId eq user.userId
+            }.empty().not()
+        }
 
     private fun saveNewUser(user: User) {
         transaction {

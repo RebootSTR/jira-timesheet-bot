@@ -12,4 +12,6 @@ interface UserRepository {
     fun getUserAuth(user: User): CharArray
 
     fun getUserState(user: User): BotState
+
+    fun isUserExist(user: User): Boolean
 }

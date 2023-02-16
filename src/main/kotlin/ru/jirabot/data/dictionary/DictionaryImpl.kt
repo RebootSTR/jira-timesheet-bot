@@ -4,7 +4,12 @@ import ru.jirabot.domain.dictionary.Dictionary
 
 class DictionaryImpl: Dictionary {
 
-    override fun get(key: String): String = dictionaryMap[key]!!
+    override fun get(key: String): String =
+        if (dictionaryMap.containsKey(key)) {
+            dictionaryMap[key]!!
+        } else {
+            key
+        }
 }
 
 private val dictionaryMap = mapOf(

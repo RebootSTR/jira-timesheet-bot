@@ -1,4 +1,4 @@
-package ru.jirabot.ui.common.states
+package ru.jirabot.ui.states
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
@@ -15,20 +15,12 @@ class TesterInputState(
 ) : BotState() {
 
     override fun interactWithUser(user: User): BotState? {
-        if (messageId != null) {
-            client.replaceMessage(
-                user = user,
-                messageId = messageId,
-                text = messageText ?: dictionary["TesterInputState"],
-                buttons = keyboard()
-            )
-        } else {
-            client.sendMessage(
-                user = user,
-                text = messageText ?: dictionary["TesterInputState"],
-                buttons = keyboard()
-            )
-        }
+        client.sendMessage(
+            user = user,
+            text = messageText ?: dictionary["TesterInputState"],
+            buttons = keyboard(),
+            replaceMessageId = messageId
+        )
 
         return null
     }
@@ -43,6 +35,7 @@ class TesterInputState(
                         "Нажата кнопка: ${action.payload}",
                         action.messageId
                     )
+
                     else -> this
                 }
             }

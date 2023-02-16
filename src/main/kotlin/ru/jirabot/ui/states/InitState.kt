@@ -1,4 +1,4 @@
-package ru.jirabot.ui.common.states
+package ru.jirabot.ui.states
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
@@ -14,6 +14,6 @@ class InitState() : BotState() {
 
     override fun obtainAction(action: UserAction): BotState {
         // Отправка сообщения с приветствием
-        return UsernameInputState()
+        return CheckUserState()
     }
 }
