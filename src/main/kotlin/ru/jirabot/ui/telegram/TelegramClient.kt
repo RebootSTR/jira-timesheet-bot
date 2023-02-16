@@ -6,11 +6,11 @@ import com.github.kotlintelegrambot.entities.InlineKeyboardMarkup
 import com.github.kotlintelegrambot.entities.keyboard.InlineKeyboardButton
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.Client
-import ru.jirabot.ui.common.User
+import ru.jirabot.domain.entities.User
 
 class TelegramClient(
     private val bot: Bot
-) : Client<User> {
+) : Client {
 
     override fun sendMessage(user: User, text: String, buttons: List<List<Button>>?) {
         bot.sendMessage(

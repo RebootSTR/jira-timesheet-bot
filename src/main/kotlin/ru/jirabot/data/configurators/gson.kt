@@ -10,7 +10,7 @@ fun configGson(): Gson {
     val builder = GsonBuilder()
         .registerTypeAdapter(
             BotState::class.java,
-            JsonDeserializerWithInheritance<BotState<*>>()
+            JsonDeserializerWithInheritance<BotState>()
         )
         .setExclusionStrategies(exclusionStrategy())
 

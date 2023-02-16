@@ -13,11 +13,11 @@ import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.ui.common.User
+import ru.jirabot.domain.entities.User
 
 class TelegramBot {
 
-    private val userRepository: UserRepository<User> = DI()
+    private val userRepository: UserRepository = DI()
     private val settingsRepository: SettingsRepository = DI()
 
     private val bot = initBot()
@@ -58,7 +58,7 @@ class TelegramBot {
         userRepository.saveUserState(user, newState)
     }
 
-    private fun injector(state: BotState<User>) {
+    private fun injector(state: BotState) {
         state.dictionary = DI.get()
         state.client = telegramClient
     }

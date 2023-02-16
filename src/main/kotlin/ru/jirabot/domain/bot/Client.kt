@@ -1,6 +1,8 @@
 package ru.jirabot.domain.bot
 
-interface Client<User> {
+import ru.jirabot.domain.entities.User
+
+interface Client {
 
     fun sendMessage(
         user: User,
@@ -10,7 +12,7 @@ interface Client<User> {
 
     fun replaceMessage(
         user: User,
-        messageId: Long, // если уж юзер через дженерик, то сообщение тоже надо но мне лень
+        messageId: Long,
         text: String,
         buttons: List<List<Button>>? = null
     )

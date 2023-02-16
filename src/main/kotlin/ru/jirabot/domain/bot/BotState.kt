@@ -2,6 +2,7 @@ package ru.jirabot.domain.bot
 
 import com.google.gson.annotations.SerializedName
 import ru.jirabot.domain.dictionary.Dictionary
+import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.serialization.Exclude
 
 /**
@@ -11,7 +12,7 @@ import ru.jirabot.domain.serialization.Exclude
  * Обязано обрабатывать действие пользователя и возвращать новое состояние
  *
  */
-abstract class BotState<User> {
+abstract class BotState {
 
     @SerializedName(TYPE_VAL_NAME)
     val typeName: String = javaClass.name
@@ -21,7 +22,7 @@ abstract class BotState<User> {
     lateinit var dictionary: Dictionary
 
     @Exclude
-    lateinit var client: Client<User>
+    lateinit var client: Client
 
     /**
      * Определяет реакцию бота на устрановку состояния
@@ -29,12 +30,12 @@ abstract class BotState<User> {
      * @return [BotState] если необходимо выполнить редирект
      * @return null если состояние принято успешно
      */
-    abstract fun interactWithUser(user: User): BotState<User>?
+    abstract fun interactWithUser(user: User): BotState?
 
     /**
      * Обработка действия пользователя и возврат нового состояния
      */
-    abstract fun obtainAction(action: UserAction): BotState<User>
+    abstract fun obtainAction(action: UserAction): BotState
 
     companion object {
         const val TYPE_VAL_NAME = "type"

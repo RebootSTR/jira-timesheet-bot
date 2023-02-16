@@ -7,11 +7,11 @@ import ru.jirabot.data.database.tables.UserTable
 import ru.jirabot.data.utils.Serializer.deserializeBotState
 import ru.jirabot.data.utils.Serializer.serialize
 import ru.jirabot.domain.bot.BotState
+import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.ui.common.states.InitState
-import ru.jirabot.ui.common.User
 
-class SqliteUserRepository : UserRepository<User> {
+class SqliteUserRepository : UserRepository {
 
     override fun saveUserAuth(user: User, auth: CharArray) {
         transaction {
@@ -25,7 +25,7 @@ class SqliteUserRepository : UserRepository<User> {
         }
     }
 
-    override fun saveUserState(user: User, state: BotState<User>) {
+    override fun saveUserState(user: User, state: BotState) {
         transaction {
             UserTable.update({ UserTable.botId eq user.userId }) {
                 it[lastState] = state.serialize()
@@ -45,7 +45,7 @@ class SqliteUserRepository : UserRepository<User> {
         }
     }
 
-    override fun getUserState(user: User): BotState<User> = transaction {
+    override fun getUserState(user: User): BotState = transaction {
         val iterable = UserDao.find {
             UserTable.botId eq user.userId
         }

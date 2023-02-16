@@ -1,8 +1,8 @@
 package ru.jirabot.domain.bot
 
-abstract class RedirectBotState<User> : BotState<User>() {
+abstract class RedirectBotState : BotState() {
 
-    override fun obtainAction(action: UserAction): BotState<User> {
+    override fun obtainAction(action: UserAction): BotState {
         error("try obtain RedirectBotAction")
     }
 }

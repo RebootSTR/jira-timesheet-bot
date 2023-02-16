@@ -1,18 +1,17 @@
 package ru.jirabot.ui
 
+import ru.jirabot.data.database.SqliteUserRepository
+import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
+import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
-import ru.jirabot.data.configureDi
-import ru.jirabot.ui.common.User
-import ru.jirabot.data.database.SqliteUserRepository
-import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.ui.common.states.InitState
 import ru.jirabot.ui.common.states.JiraAuthSuccess
-import java.util.UUID
+import java.util.*
 
 object Tests {
 
@@ -23,9 +22,9 @@ object Tests {
         configureDi()
 
         DI.get<Dictionary>()
-        DI.get<AuthUserUseCase<*>>()
+        DI.get<AuthUserUseCase>()
         DI.get<CheckTaskURLUseCase>()
-        DI.get<UserRepository<User>>()
+        DI.get<UserRepository>()
         DI.get<SettingsRepository>()
     }
 

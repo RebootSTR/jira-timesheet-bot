@@ -3,7 +3,7 @@ package ru.jirabot.ui.common.states
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.ui.common.User
+import ru.jirabot.domain.entities.User
 
 /**
  * Стейт для тестирования кнопок и редактирования сообщения.
@@ -12,9 +12,9 @@ import ru.jirabot.ui.common.User
 class TesterInputState(
     private val messageText: String? = null,
     private val messageId: Long? = null
-) : BotState<User>() {
+) : BotState() {
 
-    override fun interactWithUser(user: User): BotState<User>? {
+    override fun interactWithUser(user: User): BotState? {
         if (messageId != null) {
             client.replaceMessage(
                 user = user,
@@ -33,7 +33,7 @@ class TesterInputState(
         return null
     }
 
-    override fun obtainAction(action: UserAction): BotState<User> =
+    override fun obtainAction(action: UserAction): BotState =
         when (action) {
             is UserAction.ButtonClick -> {
                 when (action.payload) {

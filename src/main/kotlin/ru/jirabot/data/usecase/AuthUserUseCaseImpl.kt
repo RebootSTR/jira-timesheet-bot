@@ -6,14 +6,14 @@ import ru.jirabot.domain.JiraAuthenticationHandler
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
-import ru.jirabot.ui.common.User
+import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.Settings
 import java.net.URI
 
-class AuthUserUseCaseImpl : AuthUserUseCase<User> {
+class AuthUserUseCaseImpl : AuthUserUseCase {
 
     private val settingsRepository: SettingsRepository = DI()
-    private val userRepository: UserRepository<User> = DI()
+    private val userRepository: UserRepository = DI()
 
     override fun invoke(user: User, login: String, password: CharArray): Boolean {
         val authHandler = JiraAuthenticationHandler.create(login, password)

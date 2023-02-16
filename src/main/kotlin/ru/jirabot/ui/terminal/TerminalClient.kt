@@ -2,9 +2,9 @@ package ru.jirabot.ui.terminal
 
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.Client
-import ru.jirabot.ui.common.User
+import ru.jirabot.domain.entities.User
 
-class TerminalClient : Client<User> {
+class TerminalClient : Client {
 
     override fun sendMessage(user: User, text: String, buttons: List<List<Button>>?) {
         println("----")

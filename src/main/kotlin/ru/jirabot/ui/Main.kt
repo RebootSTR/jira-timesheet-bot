@@ -5,7 +5,6 @@ import com.atlassian.jira.rest.client.api.domain.Issue
 import com.atlassian.jira.rest.client.api.domain.input.WorklogInput
 import org.joda.time.DateTime
 import ru.jirabot.di.DI
-import ru.jirabot.data.configureDi
 import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.ui.telegram.TelegramBot
 import ru.jirabot.ui.terminal.TerminalBot
