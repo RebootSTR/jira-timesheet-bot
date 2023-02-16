@@ -7,6 +7,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import ru.jirabot.di.DI
 import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
+import ru.jirabot.main.database.tables.TemplateDao
+import ru.jirabot.main.database.tables.TemplateTable
 import ru.jirabot.main.database.tables.UserTable
 
 object SqliteDataSource: MyDataSource() {
@@ -21,7 +23,8 @@ object SqliteDataSource: MyDataSource() {
         println("Opened database: $${db.name}")
         transaction {
             SchemaUtils.create(
-                UserTable
+                UserTable,
+                TemplateTable
             )
         }
     }
