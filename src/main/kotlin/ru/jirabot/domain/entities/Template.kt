@@ -1,6 +1,7 @@
 package ru.jirabot.domain.entities
 
 import org.joda.time.DateTime
+import ru.jirabot.ui.common.User
 
 data class Template(
     val id: Long,

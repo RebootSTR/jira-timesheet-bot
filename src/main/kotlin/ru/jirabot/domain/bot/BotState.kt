@@ -1,6 +1,5 @@
 package ru.jirabot.domain.bot
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.jirabot.domain.dictionary.Dictionary
 import ru.jirabot.domain.serialization.Exclude
@@ -20,6 +19,7 @@ abstract class BotState<User> {
     // need to inject after creating state
     @Exclude
     lateinit var dictionary: Dictionary
+
     @Exclude
     lateinit var client: Client<User>
 
