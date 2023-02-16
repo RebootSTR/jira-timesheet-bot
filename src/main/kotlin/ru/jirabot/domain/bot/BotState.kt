@@ -1,7 +1,9 @@
 package ru.jirabot.domain.bot
 
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import ru.jirabot.domain.dictionary.Dictionary
+import ru.jirabot.domain.serialization.Exclude
 
 /**
  * Состояние бота для конкретного юзера
@@ -10,11 +12,15 @@ import ru.jirabot.domain.dictionary.Dictionary
  * Обязано обрабатывать действие пользователя и возвращать новое состояние
  *
  */
-@Serializable
 abstract class BotState<User> {
 
+    @SerializedName(TYPE_VAL_NAME)
+    val typeName: String = javaClass.name
+
     // need to inject after creating state
+    @Exclude
     lateinit var dictionary: Dictionary
+    @Exclude
     lateinit var client: Client<User>
 
     /**
@@ -29,4 +35,8 @@ abstract class BotState<User> {
      * Обработка действия пользователя и возврат нового состояния
      */
     abstract fun obtainAction(action: UserAction): BotState<User>
+
+    companion object {
+        const val TYPE_VAL_NAME = "type"
+    }
 }

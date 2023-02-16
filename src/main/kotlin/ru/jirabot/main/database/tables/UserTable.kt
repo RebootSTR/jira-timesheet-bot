@@ -1,4 +1,4 @@
-package ru.jirabot.main.repository.sqlite.tables
+package ru.jirabot.main.database.tables
 
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.Column
 
 object UserTable : LongIdTable() {
     val botId: Column<Long> = long("bot_id")
-    val auth: Column<String?> = varchar("auth", 32).nullable()
+    val auth: Column<String?> = varchar("auth", 64).nullable()
     val lastState: Column<String?> = text("last_state").nullable()
 }
 
