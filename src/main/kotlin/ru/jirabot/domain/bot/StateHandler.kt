@@ -11,10 +11,14 @@ object StateHandler {
         injector: BotState.() -> Unit
     ): BotState {
 
+        // Получаем новый стейт на основе текущего
         var newState: BotState? = state.obtainAction(action)
         while (true) {
+            // Провайдим зависимости внутрь стейта
             newState!!.injector()
+            // Проводим взаимодействие с пользователем и активируем логику
             val redirect = newState.interactWithUser(user)
+            // если на прошлом этапе вернулся стейт, тогда редиректим на него (выполняем действия заного)
             if (redirect == null) {
                 break
             } else {
