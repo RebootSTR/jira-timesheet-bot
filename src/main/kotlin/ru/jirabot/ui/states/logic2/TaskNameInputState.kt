@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
@@ -7,19 +7,16 @@ import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
 
-class TaskHoursInputState(
+class TaskNameInputState(
     private val template: TemplateDraft,
-    private val silent: Boolean = false
 ) : BotState() {
 
     override fun interactWithUser(user: User): BotState? {
-        if (!silent) {
-            client.sendMessage(
-                user = user,
-                text = dictionary["TaskHoursInputState"],
-                buttons = keyboard()
-            )
-        }
+        client.sendMessage(
+            user = user,
+            text = dictionary["TaskNameInputState"],
+            buttons = keyboard()
+        )
         return null
     }
 
@@ -30,9 +27,11 @@ class TaskHoursInputState(
                 else -> TODO()
             }
 
-            is UserAction.Message -> HoursValidateState(
-                template = template.apply { hoursString = action.text }
-            )
+            is UserAction.Message -> {
+                TaskURLInputState(
+                    template = template.apply { title = action.text }
+                )
+            }
         }
 
     private fun keyboard() = listOf(

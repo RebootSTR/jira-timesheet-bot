@@ -9,8 +9,8 @@ import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
-import ru.jirabot.ui.states.InitState
-import ru.jirabot.ui.states.JiraAuthSuccess
+import ru.jirabot.ui.states.logic2.InitState
+import ru.jirabot.ui.states.logic2.JiraAuthSuccess
 import java.util.*
 
 object Tests {

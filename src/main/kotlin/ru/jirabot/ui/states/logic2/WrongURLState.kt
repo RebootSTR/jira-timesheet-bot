@@ -1,22 +1,20 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.entities.User
 import ru.jirabot.ui.drafts.TemplateDraft
 
-class TaskHoursErrorState(
+class WrongURLState(
     private val template: TemplateDraft,
 ) : RedirectBotState() {
 
-    override fun interactWithUser(user: User): BotState? {
+    override fun interactWithUser(user: User): BotState {
         client.sendMessage(
             user = user,
-            text = dictionary["TaskHoursErrorState"],
+            text = dictionary["WrongURLState"]
         )
-        return TaskHoursInputState(
-            template = template.apply { hoursString = null },
-            silent = true
-        )
+        return TaskURLInputState(template.apply { url = null }, silent = true)
     }
+
 }

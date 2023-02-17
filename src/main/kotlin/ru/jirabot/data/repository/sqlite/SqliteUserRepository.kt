@@ -9,7 +9,7 @@ import ru.jirabot.data.utils.Serializer.serialize
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.ui.states.InitState
+import ru.jirabot.ui.states.logic2.InitState
 
 class SqliteUserRepository : UserRepository {
 

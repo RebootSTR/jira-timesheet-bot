@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
@@ -15,7 +15,7 @@ class TaskStartTimeValidateState(
     @Exclude
     private val parser: ParseStartTimeInputUseCase = DI()
 
-    override fun interactWithUser(user: User): BotState? {
+    override fun interactWithUser(user: User): BotState {
         val result = parser(template.startTimeInMinutesString)
         return if (result == null) {
             TaskStartTimeErrorState(template)

@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction

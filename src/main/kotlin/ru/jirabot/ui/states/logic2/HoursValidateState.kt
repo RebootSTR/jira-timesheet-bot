@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
@@ -15,7 +15,7 @@ class HoursValidateState(
     @Exclude
     private val parser: ParseHoursInputUseCase = DI()
 
-    override fun interactWithUser(user: User): BotState? {
+    override fun interactWithUser(user: User): BotState {
         val hours = parser(template.hoursString)
 
         return if (hours != null) {

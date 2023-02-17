@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
@@ -7,7 +7,7 @@ import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 
 class MenuState(
-    private val messageId: Long? = null
+    private val replaceMessageId: Long? = null
 ) : BotState() {
 
     override fun interactWithUser(user: User): BotState? {
@@ -16,7 +16,7 @@ class MenuState(
             user = user,
             text = dictionary["MenuState"],
             buttons = keyboard(),
-            replaceMessageId = messageId
+            replaceMessageId = replaceMessageId
         )
 
         return null

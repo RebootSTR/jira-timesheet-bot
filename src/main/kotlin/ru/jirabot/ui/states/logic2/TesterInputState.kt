@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
@@ -11,7 +11,7 @@ import ru.jirabot.domain.entities.User
  */
 class TesterInputState(
     private val messageText: String? = null,
-    private val messageId: Long? = null
+    private val replaceMessageId: Long? = null
 ) : BotState() {
 
     override fun interactWithUser(user: User): BotState? {
@@ -19,7 +19,7 @@ class TesterInputState(
             user = user,
             text = messageText ?: dictionary["TesterInputState"],
             buttons = keyboard(),
-            replaceMessageId = messageId
+            replaceMessageId = replaceMessageId
         )
 
         return null

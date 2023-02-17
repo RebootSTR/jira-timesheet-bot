@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states
+package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
@@ -12,7 +12,7 @@ import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
 
 class TemplateMenuState(
-    private val messageId: Long? = null
+    private val replaceMessageId: Long? = null
 ) : BotState() {
 
     @Exclude
@@ -28,7 +28,7 @@ class TemplateMenuState(
             user = user,
             text = dictionary["TemplateMenuState"],
             buttons = templates + keyboard(),
-            replaceMessageId = messageId
+            replaceMessageId = replaceMessageId
         )
 
         return null
