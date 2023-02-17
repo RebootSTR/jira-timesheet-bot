@@ -12,12 +12,12 @@ import ru.jirabot.domain.serialization.Exclude
  * Обязано обрабатывать действие пользователя и возвращать новое состояние
  *
  */
-abstract class BotState {
+abstract class BotState(
+    var messageId: Long? = null
+) {
 
     @SerializedName(TYPE_VAL_NAME)
     val typeName: String = javaClass.name
-
-    val messageId: Long? = null
 
     // need to inject after creating state
     @Exclude

@@ -7,10 +7,7 @@ import ru.jirabot.data.dictionary.DictionaryImpl
 import ru.jirabot.data.repository.LocalSettingsRepository
 import ru.jirabot.data.repository.sqlite.SqliteTemplateRepository
 import ru.jirabot.data.repository.sqlite.SqliteUserRepository
-import ru.jirabot.data.usecase.AuthUserUseCaseImpl
-import ru.jirabot.data.usecase.CheckTaskURLUseCaseImpl
-import ru.jirabot.data.usecase.ParseHoursInputUseCaseImpl
-import ru.jirabot.data.usecase.ParseStartTimeInputUseCaseImpl
+import ru.jirabot.data.usecase.*
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
 import ru.jirabot.domain.repository.SettingsRepository
@@ -61,5 +58,9 @@ fun configureDi() {
 
     DI.single<SaveTemplateUseCase> {
         SaveTemplateUseCaseImpl()
+    }
+
+    DI.single<FillTimeUseCase> {
+        FillTimeUseCaseImpl()
     }
 }

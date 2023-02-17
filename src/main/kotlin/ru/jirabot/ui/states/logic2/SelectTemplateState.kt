@@ -9,9 +9,10 @@ import ru.jirabot.domain.repository.TemplateRepository
 import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
-import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.drafts.FillTimeDraft
 
-class TemplateMenuState(
+class SelectTemplateState(
+    private val draft: FillTimeDraft,
     messageId: Long? = null
 ) : BotState(messageId) {
 
@@ -19,38 +20,41 @@ class TemplateMenuState(
     private val templateRepository: TemplateRepository = DI()
 
     override fun interactWithUser(user: User): BotState? {
-        // todo add info to menu
-
         val templates = templateRepository.getTemplates(user)
-            .map { listOf( Button(it.title, "?template_id=${it.id}") ) } // todo usecase
+            .map { listOf(Button(it.title, PREFIX + it.id)) } // todo usecase
 
         messageId = client.sendMessage(
             user = user,
-            text = dictionary["TemplateMenuState"],
+            text = dictionary["SelectTemplateState"],
             buttons = templates + keyboard(),
             replaceMessageId = messageId
         )
-
         return null
     }
 
     override fun obtainAction(action: UserAction): BotState =
         when (action) {
-            is UserAction.ButtonClick -> {
-                when (action.payload.toPayload()) {
-                    Payloads.ADD -> TaskNameInputState(TemplateDraft(), messageId)
-                    Payloads.BACK -> MenuState(messageId)
-                    else -> TODO()
+            is UserAction.ButtonClick -> when (action.payload.toPayload()) {
+                Payloads.BACK -> TODO()
+                else -> {
+                    val template = action.payload.drop(PREFIX.length).toLong() // todo need exception avoid mb
+                    CommentInputState(
+                        draft = draft.apply {
+                            templateId = template
+                        },
+                        messageId = messageId
+                    )
                 }
             }
 
-            is UserAction.Message -> {
-                MenuState()
-            }
+            is UserAction.Message -> TODO()
         }
 
     private fun keyboard() = listOf(
-        listOf(Payloads.ADD()),
-        listOf(Payloads.BACK()),
+        listOf(Payloads.BACK())
     )
+
+    companion object {
+        private const val PREFIX = "?template_id="
+    }
 }

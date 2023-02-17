@@ -14,10 +14,11 @@ class TaskStartTimeInputState(
 
     override fun interactWithUser(user: User): BotState? {
         if (!silent) {
-            client.sendMessage(
+            messageId = client.sendMessage(
                 user = user,
                 text = dictionary["TaskStartTimeInputState"],
-                buttons = keyboard()
+                buttons = keyboard(),
+                replaceMessageId = messageId
             )
         }
         return null
@@ -26,7 +27,7 @@ class TaskStartTimeInputState(
     override fun obtainAction(action: UserAction): BotState =
         when (action) {
             is UserAction.ButtonClick -> when (action.payload.toPayload()) {
-                Payloads.CANCEL -> TemplateMenuState(action.messageId)
+                Payloads.CANCEL -> TemplateMenuState(messageId)
                 else -> TODO()
             }
 

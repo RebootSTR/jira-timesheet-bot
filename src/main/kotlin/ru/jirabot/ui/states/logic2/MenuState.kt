@@ -7,16 +7,16 @@ import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 
 class MenuState(
-    private val replaceMessageId: Long? = null
-) : BotState() {
+    messageId: Long? = null
+) : BotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
         // todo add info to menu
-        client.sendMessage(
+        messageId = client.sendMessage(
             user = user,
             text = dictionary["MenuState"],
             buttons = keyboard(),
-            replaceMessageId = replaceMessageId
+            replaceMessageId = messageId
         )
 
         return null
@@ -26,8 +26,8 @@ class MenuState(
         when (action) {
             is UserAction.ButtonClick -> {
                 when (action.payload.toPayload()) {
-                    Payloads.TEMPLATES -> TemplateMenuState(action.messageId)
-                    Payloads.TIME_SHEET -> TODO()
+                    Payloads.TEMPLATES -> TemplateMenuState(messageId)
+                    Payloads.TIME_SHEET -> SelectFillTimeTypeState(messageId)
                     Payloads.SUBMIT -> TODO()
                     Payloads.SETTINGS -> TODO()
                     Payloads.INFO -> TODO()

@@ -9,5 +9,5 @@ interface Client {
         text: String,
         replaceMessageId: Long? = null,
         buttons: List<List<Button>>? = null
-    )
+    ): Long?
 }

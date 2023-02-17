@@ -6,6 +6,7 @@ import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 
+// todo многомодульно вытащить все логики
 class CheckURLState(
     private val url: String
 ) : RedirectBotState() {
