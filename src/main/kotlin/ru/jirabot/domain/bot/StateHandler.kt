@@ -9,7 +9,11 @@ object StateHandler {
         user: User,
         action: UserAction,
         injector: BotState.() -> Unit
-    ): BotState {
+    ): BotState? {
+        // если нажата кнопка, но не на последнем сообщении, то она игнорируется
+        if (action is UserAction.ButtonClick && action.messageId != state.messageId) {
+            return null
+        }
 
         // Получаем новый стейт на основе текущего
         var newState: BotState? = state.obtainAction(action)

@@ -17,6 +17,8 @@ abstract class BotState {
     @SerializedName(TYPE_VAL_NAME)
     val typeName: String = javaClass.name
 
+    val messageId: Long? = null
+
     // need to inject after creating state
     @Exclude
     lateinit var dictionary: Dictionary

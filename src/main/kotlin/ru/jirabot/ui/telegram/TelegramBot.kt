@@ -30,9 +30,7 @@ class TelegramBot {
     private fun initBot(): Bot = bot {
         logLevel = LogLevel.All()
         token = settingsRepository.getSettingsValue(Settings.TG_TOKEN)
-        proxy
         dispatch {
-            // todo обработка кнопок
             text {
                 // если юзер налл, то обрабатывать не нужно
                 val userId = message.from?.id ?: return@text
@@ -48,13 +46,13 @@ class TelegramBot {
 
     private fun handleText(user: User, text: String) {
         val state = userRepository.getUserState(user)
-        val newState = StateHandler.handleState(state, user, UserAction.Message(text), ::injector)
+        val newState = StateHandler.handleState(state, user, UserAction.Message(text), ::injector) ?: return
         userRepository.saveUserState(user, newState)
     }
 
     private fun handleButton(user: User, payload: String, messageId: Long?) {
         val state = userRepository.getUserState(user)
-        val newState = StateHandler.handleState(state, user, UserAction.ButtonClick(payload, messageId), ::injector)
+        val newState = StateHandler.handleState(state, user, UserAction.ButtonClick(payload, messageId), ::injector) ?: return
         userRepository.saveUserState(user, newState)
     }
 
