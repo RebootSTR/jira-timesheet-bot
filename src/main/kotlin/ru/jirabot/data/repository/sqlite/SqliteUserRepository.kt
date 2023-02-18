@@ -65,9 +65,14 @@ class SqliteUserRepository : UserRepository {
 
     override fun isUserExist(user: User): Boolean =
         transaction {
-            UserDao.find {
+            val iterable = UserDao.find {
                 UserTable.botId eq user.userId
-            }.empty().not()
+            }
+            if (iterable.empty()) {
+                false
+            } else {
+                iterable.limit(1).toList()[0].auth != null
+            }
         }
 
     private fun saveNewUser(user: User) {
