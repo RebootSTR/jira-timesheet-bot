@@ -1,6 +1,7 @@
 package ru.jirabot.data.configurators
 
 import com.google.gson.*
+import org.joda.time.DateTime
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.serialization.Exclude
 import java.lang.reflect.Type
@@ -12,6 +13,7 @@ fun configGson(): Gson {
             BotState::class.java,
             JsonDeserializerWithInheritance<BotState>()
         )
+        .registerTypeAdapter(DateTime::class.java, dateTimeSerializer())
         .setExclusionStrategies(exclusionStrategy())
 
     return builder.create()
@@ -25,6 +27,10 @@ private fun exclusionStrategy() = object : ExclusionStrategy {
     override fun shouldSkipField(field: FieldAttributes): Boolean {
         return field.getAnnotation(Exclude::class.java) != null
     }
+}
+
+private fun dateTimeSerializer() = JsonDeserializer { json, _, _ ->
+    DateTime(json.asString)
 }
 
 /**

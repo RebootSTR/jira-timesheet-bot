@@ -18,7 +18,10 @@ dependencies {
     // jira
     implementation("com.atlassian.jira:jira-rest-java-client-api:5.2.2")
     implementation("com.atlassian.jira:jira-rest-java-client-core:5.2.2")
-    implementation("io.atlassian.fugue:fugue:5.0.0")
+    implementation("io.atlassian.fugue:fugue:5.0.0") // fuck u jira!
+
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     //  telegram
     implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.0.7")
