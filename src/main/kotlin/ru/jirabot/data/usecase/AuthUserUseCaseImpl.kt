@@ -1,34 +1,27 @@
 package ru.jirabot.data.usecase
 
-import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory
+import ru.jirabot.data.services.JiraService
 import ru.jirabot.di.DI
-import ru.jirabot.domain.JiraAuthenticationHandler
-import ru.jirabot.domain.repository.SettingsRepository
+import ru.jirabot.domain.BasicAuthFactory
+import ru.jirabot.domain.entities.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
-import ru.jirabot.domain.entities.User
-import ru.jirabot.domain.repository.Settings
-import java.net.URI
 
 class AuthUserUseCaseImpl : AuthUserUseCase {
 
-    private val settingsRepository: SettingsRepository = DI()
     private val userRepository: UserRepository = DI()
+    private val jiraService: JiraService = DI()
 
     override fun invoke(user: User, login: String, password: CharArray): Boolean {
-        val authHandler = JiraAuthenticationHandler.create(login, password)
-        val uri = URI.create(settingsRepository.getSettingsValue(Settings.JIRA_HOST))
+        val auth = BasicAuthFactory.create(login, password)
 
-        val client = AsynchronousJiraRestClientFactory()
-            .createWithAuthenticationHandler(uri, authHandler)
+        val response = jiraService.myself(String(auth)).execute()
 
-        try {
-            client.userClient.getUser(login).claim()
-        } catch (e: Exception) {
+        if (response.isSuccessful.not()) {
             return false
         }
 
-        userRepository.saveUserAuth(user, authHandler.basic)
+        userRepository.saveUserAuth(user, auth)
         return true
     }
 }

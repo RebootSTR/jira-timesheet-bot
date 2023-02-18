@@ -1,7 +1,7 @@
 package ru.jirabot.data.services.model
 
 import com.google.gson.annotations.SerializedName
-import org.joda.time.DateTime
+import java.time.LocalDateTime
 
 /**
  * Единичный таймшит
@@ -17,7 +17,7 @@ data class WorklogDto(
     @SerializedName("comment")
     val comment: String,
     @SerializedName("started")
-    val started: DateTime,
+    val started: LocalDateTime,
     @SerializedName("timeSpentSeconds")
     val timeSpentSeconds: Int,
 )

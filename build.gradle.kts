@@ -11,15 +11,9 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven { url = uri("https://jitpack.io") }
-    maven { url = uri("https://m2proxy.atlassian.com/repository/public") }
 }
 
 dependencies {
-    // jira
-    implementation("com.atlassian.jira:jira-rest-java-client-api:5.2.2")
-    implementation("com.atlassian.jira:jira-rest-java-client-core:5.2.2")
-    implementation("io.atlassian.fugue:fugue:5.0.0") // fuck u jira!
-
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
