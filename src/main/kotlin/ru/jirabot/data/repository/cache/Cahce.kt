@@ -9,21 +9,30 @@ object Cache {
 
     private const val INVALIDATE_TIME = 60 * 60 * 5 // 5 minutes
 
-    private val cache: ConcurrentMap<Any, ObjectWithTime> = ConcurrentHashMap()
+    private val cache: ConcurrentMap<String, ObjectWithTime> = ConcurrentHashMap()
 
+    /**
+     * ВАЖНО: в качестве ключа можно использовать только то, что подходит в качестве ключа для Map.
+     * ЛИБО: спиок из ключей, подходящих под правило выше
+     */
     fun <T> cached(
         key: Any,
         factory: () -> T
     ): T {
-        val old = cache[key]
+        val mapKey: String = if (key is List<*>) {
+            key.joinToString { it.toString() }
+        } else {
+            listOf(key).joinToString { it.toString() }
+        }
+        val old = cache[mapKey]
         return if (old == null) {
             val instance = factory()
-            cache[key] = ObjectWithTime(instance as Any)
+            cache[mapKey] = ObjectWithTime(instance as Any)
             instance
         } else {
             if (old.isNeedRecreate()) {
                 val instance = factory()
-                cache[key] = ObjectWithTime(instance as Any)
+                cache[mapKey] = ObjectWithTime(instance as Any)
                 instance
             } else {
                 old.obj as T
@@ -43,7 +52,15 @@ object Cache {
     }
 
     private fun invalidate(keys: List<Any>) {
-        keys.forEach { cache.remove(it) }
+        keys.forEach {
+            if (it is List<*>) {
+                val mapKey = it.joinToString { it.toString() }
+                cache.remove(mapKey)
+            } else {
+                val mapKey = listOf(it).joinToString { it.toString() }
+                cache.remove(mapKey)
+            }
+        }
     }
 
     private fun ObjectWithTime.isNeedRecreate(): Boolean {

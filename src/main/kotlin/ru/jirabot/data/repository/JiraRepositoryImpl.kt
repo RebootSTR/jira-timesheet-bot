@@ -1,5 +1,6 @@
 package ru.jirabot.data.repository
 
+import ru.jirabot.data.repository.cache.Cache
 import ru.jirabot.data.services.com.deniz.jira.worklog.CalendarService
 import ru.jirabot.data.services.jira.JiraService
 import ru.jirabot.di.DI
@@ -31,12 +32,18 @@ class JiraRepositoryImpl : JiraRepository {
     }
 
     // todo больно и сложно но надо как-то проверять полученные данные, чтобы не ловить эксепшены
+    /**
+     * Возвращает список таймшитов для пользователя.
+     * Результат кешируется, нужно инвалидировать при создании нового таймшита
+     */
     override fun getTimeSheetsByDate(
         auth: CharArray,
         login: String,
         startDay: LocalDate,
         endDay: LocalDate
-    ): TimeSheetsWithWeekends {
+    ): TimeSheetsWithWeekends = Cache.cached(
+        listOf(JiraRepository::getTimeSheetsByDate, String(auth))
+    ) {
         val response = calendarService.getDateTimesheets(
             auth = String(auth),
             login = login,
@@ -46,7 +53,7 @@ class JiraRepositoryImpl : JiraRepository {
         val weekends = response.isWeekend
         val timeSheets = response.projects.flatMap {
             it.issues.flatMap {
-                it.worklogs.mapNotNull {
+                it.worklogs.map {
                     TimeSheet(
                         spentTimeSeconds = it.timeSpentSeconds,
                         day = LocalDateTime.ofEpochSecond(it.startTimeStamp / 1000, 0, ZoneOffset.UTC).toLocalDate()
@@ -54,7 +61,7 @@ class JiraRepositoryImpl : JiraRepository {
                 }
             }
         }
-        return TimeSheetsWithWeekends(
+        return@cached TimeSheetsWithWeekends(
             weekends = weekends,
             timeSheets = timeSheets
         )
