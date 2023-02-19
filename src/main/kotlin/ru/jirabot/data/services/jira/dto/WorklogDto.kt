@@ -1,4 +1,4 @@
-package ru.jirabot.data.services.model
+package ru.jirabot.data.services.jira.dto
 
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime

@@ -1,12 +1,12 @@
-package ru.jirabot.data.services
+package ru.jirabot.data.services.jira
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
-import ru.jirabot.data.services.model.IssueDto
-import ru.jirabot.data.services.model.UserDto
-import ru.jirabot.data.services.model.WorklogResultDto
+import ru.jirabot.data.services.com.deniz.jira.worklog.dto.IssueDto
+import ru.jirabot.data.services.jira.dto.UserDto
+import ru.jirabot.data.services.jira.dto.WorklogResultDto
 
 interface JiraService {
 

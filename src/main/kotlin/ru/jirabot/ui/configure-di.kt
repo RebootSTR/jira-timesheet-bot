@@ -1,7 +1,6 @@
 package ru.jirabot.ui
 
 import com.google.gson.Gson
-import retrofit2.Retrofit
 import ru.jirabot.data.configurators.configGson
 import ru.jirabot.data.configurators.configRetrofit
 import ru.jirabot.data.database.datasource.MyDataSource
@@ -10,7 +9,8 @@ import ru.jirabot.data.dictionary.DictionaryImpl
 import ru.jirabot.data.repository.LocalSettingsRepository
 import ru.jirabot.data.repository.sqlite.SqliteTemplateRepository
 import ru.jirabot.data.repository.sqlite.SqliteUserRepository
-import ru.jirabot.data.services.JiraService
+import ru.jirabot.data.services.com.deniz.jira.worklog.CalendarService
+import ru.jirabot.data.services.jira.JiraService
 import ru.jirabot.data.usecase.*
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
@@ -91,14 +91,16 @@ fun useCases() {
 }
 
 fun retrofit() {
+    val repository: SettingsRepository = DI()
+    val gson: Gson = DI()
+    val retrofit = configRetrofit(repository.getSettingsValue(Settings.JIRA_HOST), gson)
+
+
     DI.single {
-        val repository: SettingsRepository = DI()
-        val gson: Gson = DI()
-        configRetrofit(repository.getSettingsValue(Settings.JIRA_HOST), gson)
+        retrofit.create(JiraService::class.java)
     }
 
     DI.single {
-        DI.get<Retrofit>()
-            .create(JiraService::class.java)
+        retrofit.create(CalendarService::class.java)
     }
 }

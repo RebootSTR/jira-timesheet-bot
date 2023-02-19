@@ -1,7 +1,7 @@
 package ru.jirabot.ui
 
 import ru.jirabot.data.database.datasource.MyDataSource
-import ru.jirabot.data.services.JiraService
+import ru.jirabot.data.services.jira.JiraService
 import ru.jirabot.di.DI
 import ru.jirabot.ui.telegram.TelegramBot
 
