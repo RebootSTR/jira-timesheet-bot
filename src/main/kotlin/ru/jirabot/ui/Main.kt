@@ -8,11 +8,12 @@ import ru.jirabot.domain.usecase.GetStatisticUseCase
 import ru.jirabot.ui.telegram.TelegramBot
 
 fun main() {
-    runTelegram()
+//    runTelegram()
 //    retrofitTest("", "")
 //    statisticTest(0L)
     // Tests.testDi()
 //    Tests.testSqliteDb()
+    Tests.testCache()
 }
 
 fun runTelegram() {
