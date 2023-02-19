@@ -13,7 +13,7 @@ import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 class TelegramBot {
 

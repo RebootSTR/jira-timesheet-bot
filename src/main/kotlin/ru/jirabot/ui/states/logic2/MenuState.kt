@@ -1,8 +1,11 @@
 package ru.jirabot.ui.states.logic2
 
+import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
+import ru.jirabot.domain.serialization.Exclude
+import ru.jirabot.domain.usecase.GetStatisticUseCase
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 
@@ -10,11 +13,17 @@ class MenuState(
     messageId: Long? = null
 ) : BotState(messageId) {
 
+    @Exclude
+    private val statisticUseCase: GetStatisticUseCase = DI()
+
     override fun interactWithUser(user: User): BotState? {
         // todo add info to menu
+        val text = dictionary["MenuState"]
+        val statistic = statisticUseCase(user)
+
         messageId = client.sendMessage(
             user = user,
-            text = dictionary["MenuState"],
+            text = text.format(statistic.name, statistic.templateCount, statistic.weekVisual),
             buttons = keyboard(),
             replaceMessageId = messageId
         )

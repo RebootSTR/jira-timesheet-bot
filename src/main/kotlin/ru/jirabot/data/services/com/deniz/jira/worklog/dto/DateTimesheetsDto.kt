@@ -35,7 +35,7 @@ data class ProjectDto(
 data class IssueDto(
     @SerializedName("key")
     val name: String,
-    @SerializedName("worklogs")
+    @SerializedName("workLogs")
     val worklogs: List<WorklogDto>
 )
 
@@ -47,5 +47,7 @@ data class WorklogDto(
     @SerializedName("timeSpent")
     val timeSpentSeconds: Int ,
     @SerializedName("comment")
-    val comment: String
+    val comment: String,
+    @SerializedName("workStart")
+    val startTimeStamp: Long
 )

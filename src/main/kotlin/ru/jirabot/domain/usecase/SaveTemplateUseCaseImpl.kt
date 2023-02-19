@@ -1,7 +1,7 @@
 package ru.jirabot.domain.usecase
 
 import ru.jirabot.di.DI
-import ru.jirabot.domain.entities.Template
+import ru.jirabot.domain.model.Template
 import ru.jirabot.domain.repository.TemplateRepository
 
 class SaveTemplateUseCaseImpl: SaveTemplateUseCase {

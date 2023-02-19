@@ -2,7 +2,7 @@ package ru.jirabot.domain.bot
 
 import com.google.gson.annotations.SerializedName
 import ru.jirabot.domain.dictionary.Dictionary
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.serialization.Exclude
 
 /**

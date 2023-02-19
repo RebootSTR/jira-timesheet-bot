@@ -19,7 +19,7 @@ object SqliteDataSource : MyDataSource() {
 
     // todo надо бы сделать проверку на existance папки
     override fun init(db: Database) {
-        println("Opened database: $${db.name}")
+        println("Opened database: ${db.name}")
         transaction {
             SchemaUtils.create(
                 UserTable,

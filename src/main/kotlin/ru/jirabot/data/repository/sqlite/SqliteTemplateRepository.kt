@@ -3,8 +3,8 @@ package ru.jirabot.data.repository.sqlite
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.jirabot.data.database.tables.TemplateDao
 import ru.jirabot.data.database.tables.TemplateTable
-import ru.jirabot.domain.entities.Template
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.Template
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.TemplateRepository
 
 class SqliteTemplateRepository : TemplateRepository {

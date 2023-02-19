@@ -3,12 +3,10 @@ package ru.jirabot.ui.telegram
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.ChatId
 import com.github.kotlintelegrambot.entities.InlineKeyboardMarkup
-import com.github.kotlintelegrambot.entities.Message
 import com.github.kotlintelegrambot.entities.keyboard.InlineKeyboardButton
-import com.github.kotlintelegrambot.types.TelegramBotResult
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.Client
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 class TelegramClient(
     private val bot: Bot

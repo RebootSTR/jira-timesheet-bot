@@ -7,7 +7,7 @@ import ru.jirabot.data.database.tables.UserTable
 import ru.jirabot.data.utils.Serializer.deserializeBotState
 import ru.jirabot.data.utils.Serializer.serialize
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.ui.states.logic2.InitState
 

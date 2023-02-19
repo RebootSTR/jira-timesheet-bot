@@ -31,4 +31,5 @@ private val dictionaryMap = mapOf(
     "WrongURLState" to "Введена не правильная ссылка",
     "JiraAuthErrorState" to "Авторизация не удалась. \nДавай попробуем еще раз",
     "TesterInputState" to "Ничего не нажато",
+    "MenuState" to "Привет, %s\n\nСоздано шаблонов - %d\n\nТекущая неделя:\n\n%s"
 )

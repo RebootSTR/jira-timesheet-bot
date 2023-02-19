@@ -2,7 +2,7 @@ package ru.jirabot.ui.states.logic1
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 class TaskURLInputState(
     private val silent: Boolean = false

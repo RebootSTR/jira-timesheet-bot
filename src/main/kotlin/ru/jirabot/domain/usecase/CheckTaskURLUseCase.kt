@@ -1,6 +1,6 @@
 package ru.jirabot.domain.usecase
 
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 interface CheckTaskURLUseCase {
 

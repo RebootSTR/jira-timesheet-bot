@@ -2,7 +2,7 @@ package ru.jirabot.data.usecase
 
 import ru.jirabot.data.services.jira.JiraService
 import ru.jirabot.di.DI
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 

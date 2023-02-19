@@ -1,6 +1,6 @@
 package ru.jirabot.domain.bot
 
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 object StateHandler {
 

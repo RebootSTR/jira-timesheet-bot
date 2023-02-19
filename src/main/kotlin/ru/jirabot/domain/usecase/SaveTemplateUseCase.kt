@@ -1,6 +1,6 @@
 package ru.jirabot.domain.usecase
 
-import ru.jirabot.domain.entities.Template
+import ru.jirabot.domain.model.Template
 
 interface SaveTemplateUseCase {
 

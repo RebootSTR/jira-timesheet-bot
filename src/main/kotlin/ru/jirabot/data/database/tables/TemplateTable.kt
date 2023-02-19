@@ -5,8 +5,8 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
-import ru.jirabot.domain.entities.Template
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.Template
+import ru.jirabot.domain.model.User
 
 object TemplateTable : LongIdTable() {
     val user: Column<Long> = long("user_id")

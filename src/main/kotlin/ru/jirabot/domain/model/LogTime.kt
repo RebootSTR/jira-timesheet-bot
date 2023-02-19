@@ -1,4 +1,4 @@
-package ru.jirabot.domain.entities
+package ru.jirabot.domain.model
 
 data class LogTime(
     val id: Long,

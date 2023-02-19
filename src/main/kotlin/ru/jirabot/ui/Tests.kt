@@ -4,7 +4,7 @@ import ru.jirabot.data.repository.sqlite.SqliteUserRepository
 import ru.jirabot.data.database.datasource.MyDataSource
 import ru.jirabot.di.DI
 import ru.jirabot.domain.dictionary.Dictionary
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase

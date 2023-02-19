@@ -4,7 +4,7 @@ import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.TemplateRepository
 import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.ui.Payloads

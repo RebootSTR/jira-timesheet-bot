@@ -2,7 +2,7 @@ package ru.jirabot.ui.states.logic2
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft

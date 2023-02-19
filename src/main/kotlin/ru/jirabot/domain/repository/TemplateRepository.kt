@@ -1,7 +1,7 @@
 package ru.jirabot.domain.repository
 
-import ru.jirabot.domain.entities.Template
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.Template
+import ru.jirabot.domain.model.User
 
 interface TemplateRepository {
 

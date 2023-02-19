@@ -1,7 +1,7 @@
 package ru.jirabot.domain.repository
 
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.entities.User
+import ru.jirabot.domain.model.User
 
 interface UserRepository {
 
