@@ -1,6 +1,7 @@
 package ru.jirabot.data.repository
 
 import ru.jirabot.data.repository.cache.Cache
+import ru.jirabot.data.repository.cache.Cached
 import ru.jirabot.data.services.com.deniz.jira.worklog.CalendarService
 import ru.jirabot.data.services.jira.JiraService
 import ru.jirabot.di.DI
@@ -23,9 +24,12 @@ class JiraRepositoryImpl : JiraRepository {
     }
 
     // todo больно и сложно но надо как-то проверять полученные данные, чтобы не ловить эксепшены
-    override fun getUser(auth: CharArray): JiraUser {
+    @Cached
+    override fun getUser(auth: CharArray): JiraUser = Cache.cached(
+        listOf(JiraRepository::getUser, String(auth))
+    ) {
         val user = jiraService.myself(String(auth)).execute().body()!!
-        return JiraUser(
+        return@cached JiraUser(
             login = user.login,
             name = user.name
         )
@@ -36,6 +40,7 @@ class JiraRepositoryImpl : JiraRepository {
      * Возвращает список таймшитов для пользователя.
      * Результат кешируется, нужно инвалидировать при создании нового таймшита
      */
+    @Cached
     override fun getTimeSheetsByDate(
         auth: CharArray,
         login: String,

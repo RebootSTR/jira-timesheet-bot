@@ -73,3 +73,9 @@ class ObjectWithTime(
     val obj: Any,
     val time: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 )
+
+/**
+ * Опциональная аннотация для визуальной отметки закешированных функций
+ */
+@Target(AnnotationTarget.FUNCTION)
+annotation class Cached

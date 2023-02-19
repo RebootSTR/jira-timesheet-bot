@@ -4,6 +4,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import ru.jirabot.data.database.tables.UserDao
 import ru.jirabot.data.database.tables.UserTable
+import ru.jirabot.data.repository.cache.Cache
+import ru.jirabot.data.repository.cache.Cached
 import ru.jirabot.data.utils.Serializer.deserializeBotState
 import ru.jirabot.data.utils.Serializer.serialize
 import ru.jirabot.domain.bot.BotState
@@ -13,7 +15,9 @@ import ru.jirabot.ui.states.logic2.InitState
 
 class SqliteUserRepository : UserRepository {
 
-    override fun saveUserAuth(user: User, auth: CharArray) {
+    override fun saveUserAuth(user: User, auth: CharArray) = Cache.invalidate(
+        after = listOf(UserRepository::getUserAuth, user)
+    ) {
         transaction {
             UserTable
                 .update({ UserTable.botId eq user.userId })
@@ -35,8 +39,11 @@ class SqliteUserRepository : UserRepository {
         }
     }
 
-    override fun getUserAuth(user: User): CharArray {
-        return transaction {
+    @Cached
+    override fun getUserAuth(user: User): CharArray = Cache.cached(
+        listOf(UserRepository::getUserAuth, user)
+    ) {
+        return@cached transaction {
             UserDao.find {
                 UserTable.botId eq user.userId
             }.limit(1).map { dao ->
