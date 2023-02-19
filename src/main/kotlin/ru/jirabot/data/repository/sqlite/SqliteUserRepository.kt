@@ -15,7 +15,7 @@ import ru.jirabot.ui.states.logic2.InitState
 
 class SqliteUserRepository : UserRepository {
 
-    override fun saveUserAuth(user: User, auth: CharArray) = Cache.invalidate(
+    override fun saveUserAuth(user: User, auth: CharArray) = Cache.invalidateAfter(
         after = listOf(UserRepository::getUserAuth, user)
     ) {
         transaction {

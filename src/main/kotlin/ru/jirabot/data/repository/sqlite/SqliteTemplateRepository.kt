@@ -11,7 +11,7 @@ import ru.jirabot.domain.repository.TemplateRepository
 
 class SqliteTemplateRepository : TemplateRepository {
 
-    override fun saveTemplate(template: Template) = Cache.invalidate(
+    override fun saveTemplate(template: Template) = Cache.invalidateAfter(
         after = listOf(TemplateRepository::getTemplates, template.user)
     ) {
         transaction {

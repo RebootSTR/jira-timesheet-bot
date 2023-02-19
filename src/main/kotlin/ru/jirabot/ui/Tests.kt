@@ -62,16 +62,16 @@ object Tests {
         // значение закешировано, должны быть равны
         require(cached == CacheTest.getTimeStamp())
         // значение инвалидируется после вызова, значит должны быть равны
-        require(cached == CacheTest.invalidateAfter())
+        require(cached == CacheTest.testInvalidateAfter())
         // значение успело инвалиднуться, больше они не равны
-        require(cached != CacheTest.invalidateAfter())
+        require(cached != CacheTest.testInvalidateAfter())
         // кешируем значение заного
         cached = CacheTest.getTimeStamp()
 
         Thread.sleep(2000)
 
         // значение инвалидится до вызова, они не равны
-        require(cached != CacheTest.invalidateBefore())
+        require(cached != CacheTest.testInvalidateBefore())
 
         // второе значение все еще закешировано, так как его никто не инвалидил, должны быть равны
         require(second == CacheTest.getTimeStampSecond())
@@ -98,16 +98,16 @@ object CacheTest {
         return@cached LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
     }
 
-    fun invalidateAfter() = Cache.invalidate(
+    fun testInvalidateAfter() = Cache.invalidateAfter(
         after = listOf(1)
     ) {
-        return@invalidate getTimeStamp()
+        return@invalidateAfter getTimeStamp()
     }
 
-    fun invalidateBefore() = Cache.invalidate(
+    fun testInvalidateBefore() = Cache.invalidateBefore(
         before = listOf(1)
     ) {
-        return@invalidate getTimeStamp()
+        return@invalidateBefore getTimeStamp()
     }
 
     fun timeStampWithArgument(arg: Any) = Cache.cached(
