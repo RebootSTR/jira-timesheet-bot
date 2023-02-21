@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.template.create
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
@@ -6,6 +6,7 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.states.logic2.TemplateMenuState
 import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class TaskNameInputState(

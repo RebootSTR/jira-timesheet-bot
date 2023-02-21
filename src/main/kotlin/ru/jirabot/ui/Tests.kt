@@ -11,7 +11,7 @@ import ru.jirabot.domain.repository.UserRepository
 import ru.jirabot.domain.usecase.AuthUserUseCase
 import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 import ru.jirabot.ui.states.logic2.InitState
-import ru.jirabot.ui.states.logic2.JiraAuthSuccess
+import ru.jirabot.ui.states.logic2.auth.JiraAuthSuccess
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*

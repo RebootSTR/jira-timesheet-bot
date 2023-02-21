@@ -9,6 +9,7 @@ import ru.jirabot.domain.usecase.GetStatisticUseCase
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.states.logic2.common.CommonBotState
+import ru.jirabot.ui.states.logic2.filltime.SelectFillTimeTypeState
 
 class MenuState(
     messageId: Long? = null

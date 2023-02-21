@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.template.create
 
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.UserAction
@@ -6,9 +6,10 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.states.logic2.TemplateMenuState
 import ru.jirabot.ui.states.logic2.common.CommonBotState
 
-class TaskStartTimeInputState(
+class TaskURLInputState(
     private val template: TemplateDraft,
     private val silent: Boolean = false,
     messageId: Long? = null,
@@ -18,7 +19,7 @@ class TaskStartTimeInputState(
         if (!silent) {
             sendMessage(
                 user = user,
-                text = dictionary["TaskStartTimeInputState"],
+                text = dictionary["TaskURLInputState"],
                 buttons = keyboard(),
             )
         }
@@ -32,9 +33,12 @@ class TaskStartTimeInputState(
                 else -> TODO()
             }
 
-            is UserAction.Message -> TaskStartTimeValidateState(
-                template = template.apply { startTimeInMinutesString = action.text }
-            )
+            is UserAction.Message -> {
+                CheckURLState(
+                    template = template.apply { url = action.text }
+                )
+            }
+
         }
 
     private fun keyboard() = listOf(

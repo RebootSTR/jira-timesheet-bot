@@ -11,6 +11,7 @@ import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
 import ru.jirabot.ui.states.logic2.common.CommonBotState
+import ru.jirabot.ui.states.logic2.template.create.TaskNameInputState
 
 class TemplateMenuState(
     messageId: Long? = null

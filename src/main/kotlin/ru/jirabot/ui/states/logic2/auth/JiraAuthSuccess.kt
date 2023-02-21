@@ -1,8 +1,8 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.auth
 
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.model.User
+import ru.jirabot.ui.states.logic2.MenuState
 import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
 class JiraAuthSuccess(

@@ -1,31 +1,26 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.template.create
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.model.User
 import ru.jirabot.domain.serialization.Exclude
-import ru.jirabot.domain.usecase.ParseHoursInputUseCase
+import ru.jirabot.domain.usecase.CheckTaskURLUseCase
 import ru.jirabot.ui.drafts.TemplateDraft
 import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
-class HoursValidateState(
+class CheckURLState(
     private val template: TemplateDraft,
     messageId: Long? = null
 ) : CommonRedirectBotState(messageId) {
 
     @Exclude
-    private val parser: ParseHoursInputUseCase = DI()
+    private val checkTaskURLUseCase: CheckTaskURLUseCase = DI()
 
     override fun interactWithUser(user: User): BotState {
-        val hours = parser(template.hoursString)
-
-        return if (hours != null) {
-            TaskStartTimeInputState(
-                template = template.apply { this.hours = hours }
-            )
+        return if (checkTaskURLUseCase(user, template.url)) {
+            TaskHoursInputState(template)
         } else {
-            TaskHoursErrorState(template)
+            WrongURLState(template)
         }
     }
 }

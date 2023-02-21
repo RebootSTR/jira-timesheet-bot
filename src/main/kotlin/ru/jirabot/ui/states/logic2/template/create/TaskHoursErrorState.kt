@@ -1,12 +1,11 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.template.create
 
 import ru.jirabot.domain.bot.BotState
-import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.model.User
 import ru.jirabot.ui.drafts.TemplateDraft
 import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
-class WrongURLState(
+class TaskHoursErrorState(
     private val template: TemplateDraft,
     messageId: Long? = null,
 ) : CommonRedirectBotState(messageId) {
@@ -14,9 +13,11 @@ class WrongURLState(
     override fun interactWithUser(user: User): BotState {
         sendMessage(
             user = user,
-            text = dictionary["WrongURLState"]
+            text = dictionary["TaskHoursErrorState"],
         )
-        return TaskURLInputState(template.apply { url = null }, silent = true)
+        return TaskHoursInputState(
+            template = template.apply { hoursString = null },
+            silent = true
+        )
     }
-
 }

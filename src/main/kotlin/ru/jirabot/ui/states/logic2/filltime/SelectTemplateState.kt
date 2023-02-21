@@ -1,4 +1,4 @@
-package ru.jirabot.ui.states.logic2
+package ru.jirabot.ui.states.logic2.filltime
 
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
