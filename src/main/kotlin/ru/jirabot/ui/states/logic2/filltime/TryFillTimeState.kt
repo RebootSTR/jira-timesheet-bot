@@ -7,6 +7,7 @@ import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.domain.usecase.FillTimeUseCase
 import ru.jirabot.ui.drafts.FillTimeDraft
 import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
+import java.time.LocalDate
 
 class TryFillTimeState(
     private val draft: FillTimeDraft,
@@ -23,8 +24,11 @@ class TryFillTimeState(
         )
 
         val result = fillTimeUseCase(
+            user = user,
             templateId = draft.templateId,
-            comment = draft.comment
+            comment = draft.comment,
+            // todo возможность делать таймшиты не только сегодня
+            day = LocalDate.now()
         )
         return if (result) {
             TimeFilledState(draft, messageId)

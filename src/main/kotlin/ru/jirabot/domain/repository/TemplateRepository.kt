@@ -8,4 +8,6 @@ interface TemplateRepository {
     fun saveTemplate(template: Template)
 
     fun getTemplates(user: User): List<Template>
+
+    fun getTemplate(user: User, templateId: Long): Template?
 }

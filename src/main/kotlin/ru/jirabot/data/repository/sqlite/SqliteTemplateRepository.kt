@@ -12,13 +12,14 @@ import ru.jirabot.domain.repository.TemplateRepository
 class SqliteTemplateRepository : TemplateRepository {
 
     override fun saveTemplate(template: Template) = Cache.invalidateAfter(
-        after = listOf(TemplateRepository::getTemplates, template.user)
+        listOf(TemplateRepository::getTemplates, template.user)
     ) {
         transaction {
             TemplateDao.new {
                 user = template.user.userId
                 title = template.title
                 url = template.url
+                taskName = template.taskName
                 hours = template.hours
                 startTime = template.startTimeInMinutes
             }
@@ -35,5 +36,10 @@ class SqliteTemplateRepository : TemplateRepository {
                 TemplateTable.user eq user.userId
             }.map { it.toModel() }
         }
+    }
+
+    override fun getTemplate(user: User, templateId: Long): Template? {
+        val templates = getTemplates(user)
+        return templates.find { it.id == templateId }
     }
 }

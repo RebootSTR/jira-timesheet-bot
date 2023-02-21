@@ -12,6 +12,7 @@ object TemplateTable : LongIdTable() {
     val user: Column<Long> = long("user_id")
     val title: Column<String> = text("title")
     val url: Column<String> = text("url")
+    val taskName: Column<String> = text("task_name")
     val hours: Column<Int> = integer("hours")
     val startTime: Column<Int> = integer("start_time")
 }
@@ -22,6 +23,7 @@ class TemplateDao(id: EntityID<Long>) : LongEntity(id) {
     var user by TemplateTable.user
     var title by TemplateTable.title
     var url by TemplateTable.url
+    var taskName by TemplateTable.taskName
     var hours by TemplateTable.hours
     var startTime by TemplateTable.startTime
 
@@ -29,6 +31,7 @@ class TemplateDao(id: EntityID<Long>) : LongEntity(id) {
         id = id.value,
         user = User(user),
         url = url,
+        taskName = taskName,
         title = title,
         startTimeInMinutes = startTime,
         hours = hours

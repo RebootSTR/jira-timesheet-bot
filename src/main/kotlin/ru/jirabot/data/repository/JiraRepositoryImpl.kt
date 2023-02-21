@@ -2,8 +2,10 @@ package ru.jirabot.data.repository
 
 import ru.jirabot.data.repository.cache.Cache
 import ru.jirabot.data.repository.cache.Cached
+import ru.jirabot.data.repository.cache.InvalidateCache
 import ru.jirabot.data.services.com.deniz.jira.worklog.CalendarService
 import ru.jirabot.data.services.jira.JiraService
+import ru.jirabot.data.services.jira.dto.WorkLogRequestDto
 import ru.jirabot.di.DI
 import ru.jirabot.domain.model.JiraUser
 import ru.jirabot.domain.model.TimeSheet
@@ -12,6 +14,7 @@ import ru.jirabot.domain.repository.JiraRepository
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class JiraRepositoryImpl : JiraRepository {
@@ -72,7 +75,32 @@ class JiraRepositoryImpl : JiraRepository {
         )
     }
 
+    @InvalidateCache
+    override fun fillTime(
+        auth: CharArray,
+        taskName: String,
+        startTime: ZonedDateTime,
+        spentTimeSeconds: Int,
+        comment: String
+    ): Boolean = Cache.invalidateAfter(
+        listOf(JiraRepository::getTimeSheetsByDate, String(auth))
+    ) {
+        val formatter = DateTimeFormatter.ofPattern(DATE_REQUEST_FORMAT)
+        val response = jiraService.worklog(
+            auth = String(auth),
+            issueName = taskName,
+            worklog = WorkLogRequestDto(
+                comment = comment,
+                startedDateTime = startTime.format(formatter),
+                timeSpentSeconds = spentTimeSeconds,
+            )
+        ).execute()
+
+        return@invalidateAfter response.isSuccessful
+    }
+
     companion object {
         private const val DATE_FORMAT = "yyyy-MM-dd"
+        private const val DATE_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     }
 }

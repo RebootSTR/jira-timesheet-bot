@@ -8,7 +8,6 @@ object StateHandler {
         state: BotState,
         user: User,
         action: UserAction,
-        injector: BotState.() -> Unit
     ): BotState? {
         // если нажата кнопка, но не на последнем сообщении, то она игнорируется
         if (action is UserAction.ButtonClick && action.messageId != state.messageId) {
@@ -16,10 +15,8 @@ object StateHandler {
         }
 
         // Получаем новый стейт на основе текущего
-        var newState: BotState? = state.obtainAction(action)
+        var newState: BotState = state.obtainAction(action)
         while (true) {
-            // Провайдим зависимости внутрь стейта
-            newState!!.injector()
             // Проводим взаимодействие с пользователем и активируем логику
             val redirect = newState.interactWithUser(user)
             // если на прошлом этапе вернулся стейт, тогда редиректим на него (выполняем действия заного)
@@ -29,6 +26,6 @@ object StateHandler {
                 newState = redirect
             }
         }
-        return newState!!
+        return newState
     }
 }

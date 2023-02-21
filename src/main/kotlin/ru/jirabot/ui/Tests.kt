@@ -99,13 +99,13 @@ object CacheTest {
     }
 
     fun testInvalidateAfter() = Cache.invalidateAfter(
-        after = listOf(1)
+        listOf(1)
     ) {
         return@invalidateAfter getTimeStamp()
     }
 
     fun testInvalidateBefore() = Cache.invalidateBefore(
-        before = listOf(1)
+        listOf(1)
     ) {
         return@invalidateBefore getTimeStamp()
     }

@@ -1,6 +1,7 @@
 package ru.jirabot.data.usecase
 
 import ru.jirabot.data.services.jira.JiraService
+import ru.jirabot.data.utils.TemplateUtils.getIssueKey
 import ru.jirabot.di.DI
 import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.UserRepository
@@ -16,18 +17,8 @@ class CheckTaskURLUseCaseImpl : CheckTaskURLUseCase {
 
         val auth = userRepository.getUserAuth(user)
 
-        val response = jiraService.issue(String(auth), getIssueKey(url)).execute()
+        val response = jiraService.issue(String(auth), url.getIssueKey()).execute()
 
         return response.isSuccessful
-    }
-
-    /**
-     * Вычленяет ключ задачи из url к задаче
-     */
-    private fun getIssueKey(url: String): String {
-        return url
-            .split("?")[0]
-            .split("/")
-            .last()
     }
 }

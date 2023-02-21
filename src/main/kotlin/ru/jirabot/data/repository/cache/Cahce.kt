@@ -12,6 +12,12 @@ import java.util.concurrent.ConcurrentMap
 @Target(AnnotationTarget.FUNCTION)
 annotation class Cached
 
+/**
+ * Опциональная аннотация для визуальной отметки того, что функция инвалидирует кэш
+ */
+@Target(AnnotationTarget.FUNCTION)
+annotation class InvalidateCache
+
 object Cache {
 
     private const val INVALIDATE_TIME = 60 * 60 * 5 // 5 minutes
@@ -52,28 +58,14 @@ object Cache {
     }
 
     /**
-     * Позволяет инвалидировать кэш и до и после вызова
-     */
-    fun <T> invalidate(
-        before: List<Any> = emptyList(),
-        after: List<Any> = emptyList(),
-        factory: () -> T
-    ): T {
-        invalidate(before)
-        val obj = factory()
-        invalidate(after)
-        return obj
-    }
-
-    /**
      * Позволяет инвалидировать кэш после вызова
      */
     fun <T> invalidateAfter(
-        after: List<Any>,
+        vararg after: Any,
         factory: () -> T
     ): T {
         val obj = factory()
-        invalidate(after)
+        after.forEach { invalidate(it) }
         return obj
     }
 
@@ -81,24 +73,23 @@ object Cache {
      * Позволяет инвалидировать кэш до вызова
      */
     fun <T> invalidateBefore(
-        before: List<Any>,
+        vararg before: Any,
         factory: () -> T
     ): T {
-        invalidate(before)
+        before.forEach { invalidate(it) }
         return factory()
     }
 
-    private fun invalidate(keys: List<Any>) {
-        keys.forEach {
-            if (it is List<*>) {
-                val mapKey = it.joinToString { it.toString() }
-                cache.remove(mapKey)
-            } else {
-                val mapKey = listOf(it).joinToString { it.toString() }
-                cache.remove(mapKey)
-            }
-        }
+    private fun invalidate(key: Any) {
+        cache.remove(key.toMapKey())
     }
+
+    private fun Any.toMapKey() = if (this is List<*>) {
+        this.joinToString { it.toString() }
+    } else {
+        listOf(this).joinToString { it.toString() }
+    }
+
 
     private fun ObjectWithTime.isNeedRecreate(): Boolean {
         val now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)

@@ -1,5 +1,6 @@
 package ru.jirabot.ui.states.logic2.template.create
 
+import ru.jirabot.data.utils.TemplateUtils.getIssueKey
 import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.model.Template
@@ -22,6 +23,7 @@ class SaveTemplateState(
                 id = 0L,
                 user = user,
                 url = template.url!!,
+                taskName = template.url!!.getIssueKey(),
                 title = template.title!!,
                 startTimeInMinutes = template.startTimeInMinutes!!,
                 hours = template.hours!!
