@@ -10,10 +10,10 @@ import ru.jirabot.di.DI
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.StateHandler
 import ru.jirabot.domain.bot.UserAction
+import ru.jirabot.domain.model.User
 import ru.jirabot.domain.repository.Settings
 import ru.jirabot.domain.repository.SettingsRepository
 import ru.jirabot.domain.repository.UserRepository
-import ru.jirabot.domain.model.User
 
 class TelegramBot {
 
@@ -52,7 +52,8 @@ class TelegramBot {
 
     private fun handleButton(user: User, payload: String, messageId: Long?) {
         val state = userRepository.getUserState(user)
-        val newState = StateHandler.handleState(state, user, UserAction.ButtonClick(payload, messageId), ::injector) ?: return
+        val newState =
+            StateHandler.handleState(state, user, UserAction.ButtonClick(payload, messageId), ::injector) ?: return
         userRepository.saveUserState(user, newState)
     }
 
