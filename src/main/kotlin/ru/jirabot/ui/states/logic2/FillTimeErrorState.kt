@@ -6,18 +6,18 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.FillTimeDraft
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class FillTimeErrorState(
     private val draft: FillTimeDraft,
     messageId: Long? = null
-) : BotState(messageId) {
+) : CommonBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
-        messageId = client.sendMessage(
+        sendMessage(
             user = user,
             text = dictionary["FillTimeErrorState"],
             buttons = keyboard(),
-            replaceMessageId = messageId
         )
         return null
     }

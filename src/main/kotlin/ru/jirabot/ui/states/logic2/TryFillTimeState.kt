@@ -7,20 +7,20 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.domain.usecase.FillTimeUseCase
 import ru.jirabot.ui.drafts.FillTimeDraft
+import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
 class TryFillTimeState(
     private val draft: FillTimeDraft,
     messageId: Long? = null
-) : RedirectBotState(messageId) {
+) : CommonRedirectBotState(messageId) {
 
     @Exclude
     private val fillTimeUseCase: FillTimeUseCase = DI()
 
     override fun interactWithUser(user: User): BotState {
-        messageId = client.sendMessage(
+        sendMessage(
             user = user,
             text = dictionary["TryFillTimeState"],
-            replaceMessageId = messageId
         )
 
         val result = fillTimeUseCase(

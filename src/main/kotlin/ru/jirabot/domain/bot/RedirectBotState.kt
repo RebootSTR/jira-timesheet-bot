@@ -1,7 +1,7 @@
 package ru.jirabot.domain.bot
 
 abstract class RedirectBotState(
-    messageId: Long? = null
+    messageId: Long?
 ) : BotState(messageId) {
 
     override fun obtainAction(action: UserAction): BotState {

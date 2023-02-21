@@ -10,11 +10,12 @@ import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.FillTimeDraft
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class SelectTemplateState(
     private val draft: FillTimeDraft,
     messageId: Long? = null
-) : BotState(messageId) {
+) : CommonBotState(messageId) {
 
     @Exclude
     private val templateRepository: TemplateRepository = DI()
@@ -23,11 +24,10 @@ class SelectTemplateState(
         val templates = templateRepository.getTemplates(user)
             .map { listOf(Button(it.title, PREFIX + it.id)) } // todo usecase
 
-        messageId = client.sendMessage(
+        sendMessage(
             user = user,
             text = dictionary["SelectTemplateState"],
             buttons = templates + keyboard(),
-            replaceMessageId = messageId
         )
         return null
     }

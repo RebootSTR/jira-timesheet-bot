@@ -7,10 +7,12 @@ import ru.jirabot.domain.model.Template
 import ru.jirabot.domain.model.User
 import ru.jirabot.domain.usecase.SaveTemplateUseCase
 import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
 class SaveTemplateState(
     private val template: TemplateDraft,
-) : RedirectBotState() {
+    messageId: Long? = null,
+) : CommonRedirectBotState(messageId) {
 
     private val saveTemplateUseCase: SaveTemplateUseCase = DI()
 

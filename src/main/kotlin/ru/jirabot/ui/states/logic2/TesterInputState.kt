@@ -4,6 +4,7 @@ import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.model.User
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 /**
  * Стейт для тестирования кнопок и редактирования сообщения.
@@ -11,15 +12,15 @@ import ru.jirabot.domain.model.User
  */
 class TesterInputState(
     private val messageText: String? = null,
-    private val replaceMessageId: Long? = null
-) : BotState() {
+    private val replaceMessageId: Long? = null,
+    messageId: Long? = null,
+) : CommonBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
-        client.sendMessage(
+        sendMessage(
             user = user,
             text = messageText ?: dictionary["TesterInputState"],
             buttons = keyboard(),
-            replaceMessageId = replaceMessageId
         )
 
         return null

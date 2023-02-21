@@ -7,17 +7,17 @@ import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.FillTimeDraft
 import ru.jirabot.ui.drafts.FillTimeType
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class SelectFillTimeTypeState(
-    messageId: Long? = null
-) : BotState(messageId) {
+    messageId: Long? = null,
+) : CommonBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
-        messageId = client.sendMessage(
+        sendMessage(
             user = user,
             text = dictionary["SelectFillTimeTypeState"],
             buttons = keyboard(),
-            replaceMessageId = messageId
         )
         return null
     }

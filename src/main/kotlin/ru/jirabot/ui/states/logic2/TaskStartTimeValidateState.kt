@@ -7,10 +7,12 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.domain.usecase.ParseStartTimeInputUseCase
 import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
 class TaskStartTimeValidateState(
     private val template: TemplateDraft,
-) : RedirectBotState() {
+    messageId: Long? = null,
+) : CommonRedirectBotState(messageId) {
 
     @Exclude
     private val parser: ParseStartTimeInputUseCase = DI()

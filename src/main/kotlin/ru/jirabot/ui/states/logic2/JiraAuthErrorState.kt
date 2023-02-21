@@ -3,13 +3,16 @@ package ru.jirabot.ui.states.logic2
 import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.RedirectBotState
 import ru.jirabot.domain.model.User
+import ru.jirabot.ui.states.logic2.common.CommonRedirectBotState
 
-class JiraAuthErrorState : RedirectBotState() {
+class JiraAuthErrorState(
+    messageId: Long? = null
+) : CommonRedirectBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState {
-        client.sendMessage(
+        sendMessage(
             user = user,
-            text = dictionary["JiraAuthErrorState"]
+            text = dictionary["JiraAuthErrorState"],
         )
         return UsernameInputState()
     }

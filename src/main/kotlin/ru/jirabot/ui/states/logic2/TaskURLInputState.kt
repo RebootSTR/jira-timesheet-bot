@@ -6,19 +6,20 @@ import ru.jirabot.domain.model.User
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
 import ru.jirabot.ui.drafts.TemplateDraft
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class TaskURLInputState(
     private val template: TemplateDraft,
     private val silent: Boolean = false,
-) : BotState() {
+    messageId: Long? = null,
+) : CommonBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
         if (!silent) {
-            messageId = client.sendMessage(
+            sendMessage(
                 user = user,
                 text = dictionary["TaskURLInputState"],
                 buttons = keyboard(),
-                replaceMessageId = messageId
             )
         }
         return null

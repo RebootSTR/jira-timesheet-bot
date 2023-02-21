@@ -4,11 +4,14 @@ import ru.jirabot.domain.bot.BotState
 import ru.jirabot.domain.bot.Button
 import ru.jirabot.domain.bot.UserAction
 import ru.jirabot.domain.model.User
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
-class UsernameInputState : BotState() {
+class UsernameInputState(
+    messageId: Long? = null,
+) : CommonBotState(messageId) {
 
     override fun interactWithUser(user: User): BotState? {
-        client.sendMessage(
+        sendMessage(
             user = user,
             text = dictionary["UsernameInputState"],
             buttons = keyboard()

@@ -8,24 +8,23 @@ import ru.jirabot.domain.serialization.Exclude
 import ru.jirabot.domain.usecase.GetStatisticUseCase
 import ru.jirabot.ui.Payloads
 import ru.jirabot.ui.Payloads.Companion.toPayload
+import ru.jirabot.ui.states.logic2.common.CommonBotState
 
 class MenuState(
     messageId: Long? = null
-) : BotState(messageId) {
+) : CommonBotState(messageId) {
 
     @Exclude
     private val statisticUseCase: GetStatisticUseCase = DI()
 
     override fun interactWithUser(user: User): BotState? {
-        // todo add info to menu
         val text = dictionary["MenuState"]
         val statistic = statisticUseCase(user)
 
-        messageId = client.sendMessage(
+        sendMessage(
             user = user,
             text = text.format(statistic.name, statistic.templateCount, statistic.weekVisual),
             buttons = keyboard(),
-            replaceMessageId = messageId
         )
 
         return null
